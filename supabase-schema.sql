@@ -92,6 +92,24 @@ $$;
 
 grant execute on function public.username_available(citext) to anon, authenticated;
 
+-- Short share links: a buyer's phone opens a link that's just a username
+-- (e.g. #elizabeth) and looks the wallet up here — no login, no long URL.
+-- Only profile + page ride along; activity and settings (private) never do.
+create or replace function public.public_hub(uname citext)
+returns table(profile jsonb, page jsonb)
+language sql
+security definer
+set search_path = public
+as $$
+  select h.profile, h.page
+  from public.hubs h
+  join public.profiles p on p.id = h.user_id
+  where p.username = uname
+  limit 1;
+$$;
+
+grant execute on function public.public_hub(citext) to anon, authenticated;
+
 -- ---------- one more setting to change by hand ----------
 -- In the dashboard: Authentication → Providers → Email → turn OFF
 -- "Confirm email". PayHubble signs people in immediately after they create

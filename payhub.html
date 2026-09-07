@@ -1025,6 +1025,17 @@ function isHosted() {
   return /^https?:\/\//i.test(b) && !/^https?:\/\/localhost/i.test(b);
 }
 function shareLink(amount, note) {
+  /* Signed-in sellers get a short link — just their username, with the
+     amount/note (if any) as a couple of query params — instead of the
+     whole wallet baked into the URL. A buyer's phone looks it up from
+     Supabase. Falls back to the old self-contained link when there is no
+     account service to look anything up from. */
+  if (supabase && S.user && S.user.username) {
+    var q = [];
+    if (amount) q.push('a=' + encodeURIComponent(amount));
+    if (note) q.push('n=' + encodeURIComponent(note));
+    return baseUrl() + (q.length ? '?' + q.join('&') : '') + '#' + encodeURIComponent(S.user.username);
+  }
   return baseUrl() + '#' + encodeProfile(S.profile, amount, note, S.page);
 }
 function textCard(amount, note) {
@@ -1267,6 +1278,15 @@ function viewSetNewPassword() {
 function viewLoading() {
   return '<div class="wrap"><div class="card center" style="margin-top:60px">' +
     '<p class="helper">Loading your hub…</p></div></div>';
+}
+
+function viewHubNotFound() {
+  return '<div class="wrap"><div class="card center" style="margin-top:60px">' +
+    '<h2>Link not found</h2>' +
+    '<p class="helper">This payment link doesn&rsquo;t match an active PayHubble account. ' +
+    'Double-check it with whoever sent it to you.</p>' +
+    '<a class="btn btn-ghost btn-block" href="' + h(baseUrl()) + '" style="margin-top:12px">Go to PayHubble</a>' +
+    '</div></div>';
 }
 
 function viewSell() {
@@ -1880,6 +1900,7 @@ function render() {
     root.innerHTML = viewCustomer({ profile: S.profile, amount: S.draftAmount, note: S.draftNote, page: S.page }, true);
     return;
   }
+  if (S.hubNotFound) { root.innerHTML = viewHubNotFound(); return; }
   if (S.booting) { root.innerHTML = header('') + viewLoading(); return; }
   if (S.recoveryMode) { root.innerHTML = header('') + viewSetNewPassword(); return; }
   if (!S.user) { root.innerHTML = header('') + viewSignIn(); return; }
@@ -2360,13 +2381,36 @@ function scheduleQrRefresh() {
    ============================================================ */
 (async function boot() {
   var hash = location.hash ? location.hash.slice(1) : '';
+  var isRecoveryHash = /(^|&)type=recovery(&|$)/.test(hash) || /access_token=/.test(hash);
   if (hash && hash.indexOf('1~') === 0) {
     var parsed = decodeProfile(hash);
     if (parsed) S.customerData = parsed;
+  } else if (hash && !isRecoveryHash && supabase) {
+    /* Short link: just a username, e.g. #elizabeth, plus an optional
+       ?a=12.50&n=cookies for the amount/note. Nothing sensitive rides in
+       the link itself — a buyer's phone looks the wallet up from Supabase,
+       which is what keeps these links (and the NFC tags built from them)
+       short no matter how many payment methods or how much page text
+       someone has saved. */
+    S.booting = true; render();
+    var uname = decodeURIComponent(hash.split('?')[0]);
+    try {
+      var res = await supabase.rpc('public_hub', { uname: uname });
+      var row = res.data && res.data[0];
+      if (row) {
+        var params = new URLSearchParams(location.search);
+        S.customerData = {
+          profile: Object.assign({ custom: [] }, row.profile || {}),
+          page: Object.assign(blankPage(), row.page || {}),
+          amount: params.get('a') || '', note: params.get('n') || ''
+        };
+      } else { S.hubNotFound = true; }
+    } catch (e) { S.hubNotFound = true; }
+    S.booting = false;
   }
-  /* A buyer opening a shared payment link never needs an account —
-     skip Supabase entirely and go straight to the customer view. */
-  if (!S.customerData && supabase) {
+  /* A buyer opening a shared payment link never needs to sign in —
+     skip session restore entirely and go straight to the customer view. */
+  if (!S.customerData && !S.hubNotFound && supabase) {
     S.booting = true; render();
     supabase.auth.onAuthStateChange(function (event, session) {
       if (event === 'PASSWORD_RECOVERY') { S.recoveryMode = true; render(); }
