@@ -1,0 +1,2385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#165564" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B2A33" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PayHubble">
+<meta name="application-name" content="PayHubble">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232B6774'/%3E%3Cstop offset='1' stop-color='%230E3742'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='180' height='180' rx='40' fill='url(%23g)'/%3E%3Cg fill='none' stroke='%239ED6D0' stroke-width='7'%3E%3Ccircle cx='90' cy='90' r='60'/%3E%3Cpath d='M90 42c15 13 23 30 23 49 0 9-2 18-6 26H73c-4-8-6-17-6-26 0-19 8-36 23-49Z' stroke-linejoin='round'/%3E%3Cpath d='M74 111l-13 14v12l13-7M106 111l13 14v12l-13-7' stroke-linejoin='round'/%3E%3C/g%3E%3Cg fill='none' stroke='%23EAF7F5' stroke-width='5.5' stroke-linecap='round'%3E%3Cpath d='M90 68v27'/%3E%3Cpath d='M97 74c-2-3-4-4-7-4-4 0-7 2-7 5 0 7 14 4 14 12 0 3-3 5-7 5-3 0-6-1-8-4'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22PayHubble%22%2C%22short_name%22%3A%22PayHubble%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23EDF1F4%22%2C%22theme_color%22%3A%22%23165564%22%2C%22start_url%22%3A%22.%22%7D">
+<title>PayHubble — tap to get paid</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232B6774'/%3E%3Cstop offset='1' stop-color='%230E3742'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23g)'/%3E%3Cg fill='none' stroke='%239ED6D0' stroke-width='1.7'%3E%3Ccircle cx='16' cy='16' r='11'/%3E%3Cpath d='M16 7c3 2.6 4.6 6 4.6 9.8 0 1.9-.4 3.6-1.1 5.2h-7c-.7-1.6-1.1-3.3-1.1-5.2C11.4 13 13 9.6 16 7Z' stroke-linejoin='round'/%3E%3C/g%3E%3Cpath d='M16 12.4v7.2' fill='none' stroke='%23EAF7F5' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono&display=swap">
+<style>
+:root{
+  /* Teal ramp — sampled from the logo */
+  --ph-teal-900:#0E3742;
+  --ph-teal-800:#164451;
+  --ph-teal-700:#165564;   /* PRIMARY — the wordmark */
+  --ph-teal-600:#2B6774;
+  --ph-teal-500:#42848F;
+  --ph-teal-400:#569FA5;
+  --ph-teal-300:#75BDB8;
+  --ph-teal-200:#9ED6D0;
+  --ph-teal-100:#C9E9E5;
+  --ph-teal-50:#EAF7F5;
+
+  /* Neutrals */
+  --ph-canvas:#EDF1F4;
+  --ph-surface:#FFFFFF;
+  --ph-surface-sunken:#F6F8FA;
+  --ph-border:#DBDFE2;
+  --ph-border-strong:#C4CBD1;
+  --ph-text:#14282E;
+  --ph-text-muted:#5B6670;
+
+  /* Semantic */
+  --ph-success:#0F6B51;  --ph-success-bg:#DFF3EC;  --ph-success-fg:#0F5A45;
+  --ph-pending:#8A6014;  --ph-pending-bg:#FBF0D6;  --ph-pending-fg:#7A5310;
+  --ph-danger:#B03A2B;   --ph-danger-bg:#FBE7E3;   --ph-danger-fg:#8C2F22;
+  --ph-info:#2B6774;     --ph-info-bg:#DDEEF3;     --ph-info-fg:#164451;
+
+  /* Method chips */
+  --ph-venmo:#008CFF;  --ph-paypal:#003087;  --ph-cashapp:#00D64F;
+  --ph-zelle:#6D1ED4;  --ph-applecash:#14282E; --ph-googlepay:#5F6368;
+  --ph-cash:#0F6B51;
+
+  /* Gradients */
+  --ph-gradient:linear-gradient(155deg,#9ED6D0 0%,#569FA5 40%,#2B6774 100%);
+  --ph-gradient-deep:linear-gradient(155deg,#2B6774 0%,#0E3742 100%);
+
+  /* Role tokens that flip in dark mode */
+  --ph-primary:#165564;
+  --ph-primary-hover:#164451;
+  --ph-primary-soft:#EAF7F5;
+  --ph-on-primary:#FFFFFF;
+
+  /* Type */
+  --font-display:'Poppins','Jost','Century Gothic',system-ui,sans-serif;
+  --font-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,'SF Mono',Menlo,monospace;
+
+  /* Shape */
+  --radius-sm:8px; --radius-md:14px; --radius-lg:22px; --radius-pill:999px;
+  --stroke:1.5px;
+  --shadow-sm:0 1px 2px rgba(14,55,66,.06), 0 1px 3px rgba(14,55,66,.08);
+  --shadow-md:0 4px 12px rgba(14,55,66,.08), 0 2px 4px rgba(14,55,66,.06);
+  --shadow-lg:0 12px 32px rgba(14,55,66,.12);
+  --ring:0 0 0 3px rgba(22,85,100,.28);
+
+  /* Motion */
+  --ease:cubic-bezier(.2,.8,.25,1);
+  --dur-fast:120ms; --dur-base:220ms; --dur-slow:420ms;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ph-canvas:#0B2A33;
+    --ph-surface:#103740;
+    --ph-surface-sunken:#0E313A;
+    --ph-border:#1D4F5B;
+    --ph-border-strong:#2A6272;
+    --ph-text:#E4F0F2;
+    --ph-text-muted:#9BB2B8;
+    --ph-primary:#75BDB8;
+    --ph-primary-hover:#9ED6D0;
+    --ph-primary-soft:rgba(117,189,184,.14);
+    --ph-on-primary:#0B2A33;
+    --shadow-sm:0 1px 3px rgba(0,0,0,.4);
+    --shadow-md:0 4px 12px rgba(0,0,0,.45);
+    --shadow-lg:0 12px 32px rgba(0,0,0,.5);
+    --ring:0 0 0 3px rgba(117,189,184,.34);
+  }
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--ph-canvas);color:var(--ph-text);font-size:16px;
+  line-height:1.5;padding-bottom:env(safe-area-inset-bottom);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;margin:0}
+a{color:var(--ph-primary)}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:var(--radius-sm)}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px 124px}
+
+/* ---- header ---- */
+header.top{background:var(--ph-gradient-deep);color:#fff;
+  padding:calc(14px + env(safe-area-inset-top)) 16px 14px;position:sticky;top:0;z-index:30;
+  box-shadow:var(--shadow-md)}
+header.top .in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:11px}
+header.top h1{font-size:20px;letter-spacing:.14em;text-transform:uppercase;flex:1;line-height:1;color:#fff}
+header.top .who{font-family:var(--font-body);font-size:12.5px;color:rgba(255,255,255,.82)}
+.logo{width:32px;height:32px;flex:none;color:var(--ph-teal-200);display:block}
+.logo svg{width:100%;height:100%;display:block}
+
+/* ---- surfaces ---- */
+.card{background:var(--ph-surface);border:1px solid var(--ph-border);border-radius:var(--radius-lg);
+  padding:20px;margin-top:12px;box-shadow:var(--shadow-sm)}
+.card>h2{font-size:19px;letter-spacing:-.01em}
+.card>h3{font-size:17px}
+.helper{color:var(--ph-text-muted);font-size:13.5px;margin:6px 0 0}
+.mini{font-size:12px;color:var(--ph-text-muted)}
+.center{text-align:center}
+.big-amount{font-family:var(--font-display);font-size:44px;font-weight:600;letter-spacing:-.02em;
+  text-align:center;margin:10px 0 0;font-variant-numeric:tabular-nums;color:var(--ph-text)}
+.big-amount .sym{font-size:.6em;vertical-align:.16em;margin-right:.04em;color:var(--ph-text-muted)}
+
+/* ---- forms ---- */
+label{display:block;font-size:13px;font-weight:600;color:var(--ph-text-muted);margin-bottom:6px}
+input[type=text],input[type=number],input[type=password],input[type=tel],select,textarea{
+  width:100%;padding:12px 13px;border:1px solid var(--ph-border-strong);border-radius:var(--radius-md);
+  font-size:16px;font-family:var(--font-body);background:var(--ph-surface);color:var(--ph-text);
+  min-height:44px;transition:border-color var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ph-primary);box-shadow:var(--ring)}
+textarea{resize:vertical;line-height:1.5;font-size:15px}
+
+/* ---- buttons ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;
+  font-family:var(--font-display);font-size:15px;font-weight:600;letter-spacing:.02em;
+  min-height:44px;padding:12px 18px;border-radius:var(--radius-md);text-decoration:none;
+  transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease)}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--ph-primary);color:var(--ph-on-primary)}
+.btn-primary:hover{background:var(--ph-primary-hover)}
+.btn-secondary{background:var(--ph-surface);color:var(--ph-primary);border:1.5px solid var(--ph-primary)}
+.btn-secondary:hover{background:var(--ph-primary-soft)}
+.btn-ghost{background:transparent;color:var(--ph-primary);border:1px solid var(--ph-border)}
+.btn-ghost:hover{background:var(--ph-primary-soft)}
+.btn-danger{background:var(--ph-surface);color:var(--ph-danger);border:1.5px solid var(--ph-danger)}
+.btn-danger:hover{background:var(--ph-danger-bg)}
+.btn-block{display:flex;width:100%;margin-top:12px}
+.btn-sm{min-height:36px;padding:8px 13px;font-size:13px;border-radius:var(--radius-sm)}
+.row{display:flex;gap:10px}.row>*{flex:1}
+
+/* ---- tab bar ---- */
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--ph-surface);
+  border-top:1px solid var(--ph-border);z-index:40;padding-bottom:env(safe-area-inset-bottom);
+  box-shadow:0 -2px 12px rgba(14,55,66,.06)}
+.tabs .in{max-width:560px;margin:0 auto;display:flex}
+.tabs button{flex:1;background:none;border:0;padding:9px 2px 10px;font-family:var(--font-display);
+  font-size:10px;font-weight:600;letter-spacing:.04em;color:var(--ph-text-muted);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;min-height:56px;
+  transition:color var(--dur-fast) var(--ease)}
+.tabs button .ic{width:22px;height:22px;display:block}
+.tabs button .ic svg{width:100%;height:100%;display:block}
+.tabs button.on{color:var(--ph-primary)}
+
+/* ---- method rows ---- */
+.pm{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--ph-border)}
+.pm:last-child{border-bottom:0}
+.pm .ic{width:42px;height:42px;border-radius:var(--radius-md);display:grid;place-items:center;
+  font-family:var(--font-display);font-weight:600;font-size:17px;flex:none}
+.pm .bd{flex:1;min-width:0}
+.pm .bd .nm{font-weight:600;font-size:15px}
+.pm .bd .vl{font-family:var(--font-mono);font-size:12.5px;color:var(--ph-text-muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pm-field{display:flex;align-items:flex-start;gap:11px;padding:10px 0}
+.pm-field .ic{width:42px;height:42px;border-radius:var(--radius-md);display:grid;place-items:center;
+  font-family:var(--font-display);font-weight:600;font-size:17px;flex:none;margin-top:22px}
+.pm-field .bd{flex:1;min-width:0}
+
+/* ---- chips & status ---- */
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);font-size:12px;
+  font-weight:600;letter-spacing:.04em;padding:4px 11px;border-radius:var(--radius-pill);
+  background:var(--ph-surface-sunken);color:var(--ph-text-muted);border:1px solid var(--ph-border)}
+.chip:before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.chip.ok{background:var(--ph-success-bg);color:var(--ph-success-fg);border-color:transparent}
+.chip.warn{background:var(--ph-pending-bg);color:var(--ph-pending-fg);border-color:transparent}
+.chip.err{background:var(--ph-danger-bg);color:var(--ph-danger-fg);border-color:transparent}
+.chip.info{background:var(--ph-info-bg);color:var(--ph-info-fg);border-color:transparent}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+
+/* ---- QR ---- */
+.qrbox{background:#FFFFFF;border-radius:var(--radius-lg);padding:14px;display:grid;place-items:center;
+  border:1px solid var(--ph-border)}
+.qrbox svg{width:100%;height:auto;max-width:340px;display:block}
+.linkbox{font-family:var(--font-mono);font-size:11.5px;word-break:break-all;
+  background:var(--ph-surface-sunken);border:1px solid var(--ph-border);border-radius:var(--radius-sm);
+  padding:10px;color:var(--ph-text-muted);max-height:86px;overflow:auto}
+
+/* ---- notes, lists ---- */
+.note{background:var(--ph-pending-bg);border:1px solid #EFDCAE;border-radius:var(--radius-md);
+  padding:12px 14px;font-size:13.5px;color:var(--ph-pending-fg);line-height:1.5}
+.note a{color:var(--ph-pending-fg);font-weight:600}
+.note.blue{background:var(--ph-info-bg);border-color:#BFDCE5;color:var(--ph-info-fg)}
+.note.blue a{color:var(--ph-info-fg)}
+.empty{text-align:center;color:var(--ph-text-muted);padding:26px 6px;font-size:14px}
+.empty .badge-art{width:56px;height:56px;margin:0 auto 10px;color:var(--ph-teal-300);display:block}
+.list-item{display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--ph-border)}
+.list-item:last-child{border-bottom:0}
+.kv{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;font-size:14.5px;
+  border-bottom:1px solid var(--ph-border)}
+.kv:last-child{border-bottom:0}
+.kv b{font-variant-numeric:tabular-nums;font-weight:600}
+.money{font-variant-numeric:tabular-nums;font-weight:600}
+
+/* ---- segmented control ---- */
+.seg{display:flex;background:var(--ph-surface-sunken);border:1px solid var(--ph-border);
+  border-radius:var(--radius-pill);padding:4px;gap:4px;margin-top:8px}
+.seg button{flex:1;border:0;background:none;padding:9px 6px;border-radius:var(--radius-pill);
+  font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:.02em;
+  color:var(--ph-text-muted);cursor:pointer;min-height:38px;
+  transition:background var(--dur-base) var(--ease),color var(--dur-base) var(--ease)}
+.seg button.on{background:var(--ph-surface);color:var(--ph-text);box-shadow:var(--shadow-sm)}
+
+.remove-x{background:none;border:0;color:var(--ph-text-muted);font-size:24px;line-height:1;
+  cursor:pointer;padding:0 6px;min-height:44px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:88px;background:var(--ph-teal-900);
+  color:#fff;padding:12px 18px;border-radius:var(--radius-md);font-size:14px;z-index:100;opacity:0;
+  pointer-events:none;transition:opacity var(--dur-base) var(--ease);max-width:88%;text-align:center;
+  box-shadow:var(--shadow-lg)}
+.toast.show{opacity:.97}
+
+/* ---- hero ---- */
+.hero{background:var(--ph-gradient-deep);color:#fff;border-radius:var(--radius-lg);padding:22px;
+  margin-top:14px;position:relative;overflow:hidden;box-shadow:var(--shadow-md)}
+.hero h2{color:#fff;font-size:25px;letter-spacing:-.01em}
+.hero p{margin:8px 0 0;font-size:14px;color:rgba(255,255,255,.88)}
+.hero .kicker{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.8);margin:0 0 6px}
+.hero .fig{font-family:var(--font-display);font-weight:600;font-size:44px;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;line-height:1.05}
+.hero .fig .sym{font-size:.6em;vertical-align:.16em;margin-right:.04em;color:rgba(255,255,255,.72)}
+.hero .spark{position:absolute;top:-14px;right:-10px;width:132px;height:132px;opacity:.2;color:#fff;
+  pointer-events:none}
+.hero .spark svg{width:100%;height:100%}
+
+/* ---- numpad ---- */
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.numpad button{padding:13px 0;font-family:var(--font-display);font-size:19px;font-weight:600;
+  border:1px solid var(--ph-border);background:var(--ph-surface);color:var(--ph-text);
+  border-radius:var(--radius-md);cursor:pointer;min-height:48px;
+  transition:background var(--dur-fast) var(--ease)}
+.numpad button:active{background:var(--ph-primary-soft)}
+
+details.raw{margin-top:12px}
+details.raw summary{cursor:pointer;font-size:12.5px;color:var(--ph-text-muted);font-weight:600;list-style:none}
+details.raw summary::-webkit-details-marker{display:none}
+details.raw summary:before{content:'▸ '}
+details.raw[open] summary:before{content:'▾ '}
+
+.cardprev{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--ph-border);
+  background:#fff;box-shadow:var(--shadow-sm)}
+.cardprev img{display:block;width:100%;height:auto}
+.wbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;
+  min-height:48px;border-radius:var(--radius-md);border:0;cursor:pointer;font-family:var(--font-display);
+  font-weight:600;font-size:15px;letter-spacing:.02em;margin-top:12px;text-decoration:none}
+.wbtn.apple{background:#14282E;color:#fff}
+.wbtn.google{background:#fff;color:#3C4043;border:1.5px solid #DADCE0}
+.wbtn[disabled]{opacity:.45;cursor:default}
+
+.steps{counter-reset:s;padding:0;margin:12px 0 0;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 32px;margin-bottom:10px;font-size:14px;
+  color:var(--ph-text-muted)}
+.steps li:before{content:counter(s);position:absolute;left:0;top:0;width:22px;height:22px;
+  border-radius:50%;background:var(--ph-primary);color:var(--ph-on-primary);font-family:var(--font-display);
+  font-size:12px;font-weight:600;display:grid;place-items:center}
+
+.swatches{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.swatch{width:48px;height:48px;padding:0;appearance:none;border-radius:var(--radius-md);border:3px solid transparent;cursor:pointer;
+  position:relative;box-shadow:var(--shadow-sm);transition:transform var(--dur-fast) var(--ease)}
+.swatch:active{transform:scale(.96)}
+.swatch.on{border-color:var(--ph-text)}
+.swatch.on:after{content:'✓';position:absolute;inset:0;display:grid;place-items:center;color:#fff;
+  font-size:19px;font-weight:700}
+
+/* ---- progress (allocation-style) ---- */
+.track{height:10px;border-radius:var(--radius-pill);background:var(--ph-teal-100);overflow:hidden;margin-top:10px}
+.track > i{display:block;height:100%;border-radius:var(--radius-pill);background:var(--ph-gradient);
+  transition:width var(--dur-base) var(--ease)}
+.track.done > i{background:var(--ph-success)}
+
+/* ---- the one celebratory moment ---- */
+.celebrate{position:fixed;inset:0;pointer-events:none;z-index:200}
+.celebrate i{position:absolute;width:26px;height:26px;color:var(--ph-teal-300);
+  animation:ph-pop var(--dur-slow) var(--ease) forwards}
+.celebrate svg{width:100%;height:100%}
+@keyframes ph-pop{0%{opacity:0;transform:scale(.4) translateY(10px)}
+  40%{opacity:1}100%{opacity:0;transform:scale(1.3) translateY(-26px)}}
+@media (prefers-reduced-motion:reduce){
+  .celebrate{display:none}
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}
+
+/* ===== the buyer's page ===== */
+.pp{--pri:#165564;--acc:#0E3742;--tint:#EAF7F5;--ln:#DBDFE2;
+  color-scheme:light;background:var(--tint);color:#14282E;min-height:100vh;
+  padding-top:calc(68px + env(safe-area-inset-top));padding-bottom:24px}
+.pp *{box-sizing:border-box}
+.pp .hero2{background:linear-gradient(180deg,#FFFFFF 0%,#EDF1F4 100%);border-bottom:4px solid var(--pri);
+  padding:36px 20px 32px;text-align:center;position:relative;overflow:hidden}
+.pp .hero2:before,.pp .hero2:after{content:"";position:absolute;border-radius:50%;border:2px solid var(--ln)}
+.pp .hero2:before{width:300px;height:300px;top:-180px;left:-100px}
+.pp .hero2:after{width:190px;height:190px;bottom:-124px;right:-56px}
+.pp .eyebrow{font-family:var(--font-display);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--acc);margin:0 0 6px;font-weight:600;position:relative}
+.pp .title{font-family:var(--font-display);font-weight:600;font-size:30px;line-height:1.14;
+  letter-spacing:-.01em;margin:0 0 12px;color:#14282E;position:relative}
+.pp .blurb{max-width:430px;margin:0 auto;font-size:15px;line-height:1.55;color:#5B6670;position:relative}
+.pp .body2{max-width:560px;margin:0 auto;padding:22px 16px 0}
+.pp .panel{background:#fff;border:1px solid var(--ln);border-top:4px solid var(--pri);
+  border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px 18px 22px;margin-bottom:16px}
+.pp .plabel{font-family:var(--font-display);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--pri);font-weight:600;margin:0 0 14px;text-align:center}
+.pp .agrid{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.pp .abtn{font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:.02em;
+  background:#fff;border:1.5px solid var(--pri);color:var(--pri);padding:12px 20px;
+  border-radius:var(--radius-pill);cursor:pointer;min-width:78px;min-height:48px;
+  font-variant-numeric:tabular-nums;
+  transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease)}
+.pp .abtn.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.pp .custom{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px}
+.pp .custom span{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--pri)}
+.pp .custom input{width:160px;font-family:var(--font-display);font-size:20px;font-weight:600;
+  padding:12px 10px;border-radius:var(--radius-md);border:1.5px solid var(--ln);background:#fff;
+  text-align:center;color:#14282E;font-variant-numeric:tabular-nums;min-height:48px}
+.pp .custom input:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(22,85,100,.22)}
+.pp .due{text-align:center}
+.pp .due .amt{font-family:var(--font-display);font-weight:600;font-size:48px;line-height:1.05;
+  color:var(--pri);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pp .due .amt .sym{font-size:.6em;vertical-align:.18em;margin-right:.03em}
+.pp .due .for{font-size:15px;color:#5B6670;margin-top:10px}
+.pp .cards2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+@media (max-width:479px){.pp .cards2{grid-template-columns:1fr}}
+.pp .pcard{background:#fff;border:1px solid var(--ln);border-radius:var(--radius-lg);padding:14px;
+  box-shadow:var(--shadow-sm);display:flex;flex-direction:column;text-align:left}
+.pp .phead{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.pp .pmeta{flex:1;min-width:0}
+.pp .glyph{width:40px;height:40px;border-radius:var(--radius-md);display:grid;place-items:center;flex:none;
+  font-family:var(--font-display);font-size:17px;font-weight:600}
+.pp .pcard h3{font-family:var(--font-display);font-weight:600;font-size:16.5px;margin:0;color:#14282E;
+  line-height:1.2}
+.pp .handle{font-family:var(--font-mono);font-size:12.5px;color:#5B6670;word-break:break-all;line-height:1.35}
+.pp .paybtn{width:100%;padding:12px 12px;min-height:48px;border-radius:var(--radius-md);
+  border:1px solid var(--ln);border-left:4px solid var(--mc,var(--pri));background:#fff;color:#14282E;
+  font-family:var(--font-display);font-weight:600;font-size:14.5px;letter-spacing:.02em;cursor:pointer;
+  text-decoration:none;display:flex;align-items:center;justify-content:center;text-align:center;
+  font-variant-numeric:tabular-nums;transition:background var(--dur-fast) var(--ease)}
+.pp .paybtn:hover{background:#F6F8FA}
+.pp .paybtn:active{background:#EDF1F4}
+.pp .pnote{font-size:12px;color:#5B6670;margin:8px 0 0;line-height:1.4}
+.pp .confirm{font-family:var(--font-display);font-size:12px;font-weight:600;margin:8px 0 0;color:var(--pri)}
+.pp .pills{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.pp .pills span{background:var(--tint);border:1px solid var(--ln);color:var(--acc);font-size:12px;
+  font-family:var(--font-display);font-weight:600;letter-spacing:.02em;padding:5px 12px;
+  border-radius:var(--radius-pill)}
+.pp .about2 h3{font-family:var(--font-display);font-weight:600;font-size:20px;margin:0 0 12px;color:#14282E}
+.pp .about2 p{font-size:15px;line-height:1.65;color:#3E4C52;margin:0 0 12px}
+.pp .badge2{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);font-size:11.5px;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pri);
+  border:1.5px solid var(--pri);padding:5px 11px;border-radius:var(--radius-sm)}
+.pp .foot2{text-align:center;padding:16px 20px 8px;font-size:12.5px;color:#5B6670}
+.pp .gridnote{text-align:center;font-size:12.5px;color:#5B6670;margin:-10px 0 20px}
+.pp .empty{color:#5B6670}
+
+/* the amount follows you down the page, so nobody taps Pay without seeing it */
+.pp .amtbar{position:fixed;left:0;right:0;top:0;background:var(--pri);color:#fff;z-index:60;
+  padding:calc(12px + env(safe-area-inset-top)) 16px 12px;
+  display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 -2px 16px rgba(14,55,66,.22)}
+.pp .amtbar .lbl{font-family:var(--font-display);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.85);font-weight:600}
+.pp .amtbar .bar-amt{font-family:var(--font-display);font-size:22px;font-weight:600;
+  font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.pp .amtbar button{background:rgba(255,255,255,.2);border:0;color:#fff;font-family:var(--font-display);
+  font-weight:600;font-size:13px;padding:8px 14px;border-radius:var(--radius-pill);cursor:pointer;
+  min-height:36px}
+
+/* ===== full-screen code, for a table at a booth ===== */
+.fsqr{position:fixed;inset:0;background:#FFFFFF;color:#14282E;z-index:300;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+.fsqr .code{width:min(88vw,88vh,560px);height:auto}
+.fsqr .code svg{width:100%;height:auto;display:block}
+.fsqr .fs-amt{font-family:var(--font-display);font-size:44px;font-weight:600;letter-spacing:-.02em;
+  margin-top:18px;font-variant-numeric:tabular-nums}
+.fsqr .fs-for{font-size:16px;color:#5B6670;margin-top:4px}
+.fsqr .fs-hint{font-size:13.5px;color:#5B6670;margin-top:16px}
+.fsqr .fs-done{position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;
+  background:#F6F8FA;border:1px solid #DBDFE2;color:#14282E;font-family:var(--font-display);
+  font-weight:600;font-size:14.5px;padding:10px 18px;border-radius:var(--radius-md);cursor:pointer;
+  min-height:44px}
+.fsqr .fs-wake{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom));left:0;right:0;
+  font-size:12px;color:#5B6670}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   Tiny QR encoder — byte mode, versions 1-40, ECC L/M/Q/H.
+   No dependencies, no network. Returns a boolean matrix.
+   ============================================================ */
+var QR = (function () {
+  var ECC_CW = {
+    L: [-1,7,10,15,20,26,18,20,24,30,18,20,24,26,30,22,24,28,30,28,28,28,28,30,30,26,28,30,30,30,30,30,30,30,30,30,30,30,30,30,30],
+    M: [-1,10,16,26,18,24,16,18,22,22,26,30,22,22,24,24,28,28,26,26,26,26,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28],
+    Q: [-1,13,22,18,26,18,24,18,22,20,24,28,26,24,20,30,24,28,28,26,30,28,30,30,30,30,28,30,30,30,30,30,30,30,30,30,30,30,30,30,30],
+    H: [-1,17,28,22,16,22,28,26,26,24,28,24,28,22,24,24,30,28,28,26,28,30,24,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30]
+  };
+  var ECC_BLOCKS = {
+    L: [-1,1,1,1,1,1,2,2,2,2,4,4,4,4,4,6,6,6,6,7,8,8,9,9,10,12,12,12,13,14,15,16,17,18,19,19,20,21,22,24,25],
+    M: [-1,1,1,1,2,2,4,4,4,5,5,5,8,9,9,10,10,11,13,14,16,17,17,18,20,21,23,25,26,28,29,31,33,35,37,38,40,43,45,47,49],
+    Q: [-1,1,1,2,2,4,4,6,6,8,8,8,10,12,16,12,17,16,18,21,20,23,23,25,27,29,34,34,35,38,40,43,45,48,51,53,56,59,62,65,68],
+    H: [-1,1,1,2,4,4,4,5,6,8,8,11,11,16,16,18,16,19,21,25,25,25,34,30,32,35,37,40,42,45,48,51,54,57,60,63,66,70,74,77,81]
+  };
+  var ECL_BITS = { L: 1, M: 0, Q: 3, H: 2 };
+
+  function rawDataModules(ver) {
+    var result = (16 * ver + 128) * ver + 64;
+    if (ver >= 2) {
+      var numAlign = Math.floor(ver / 7) + 2;
+      result -= (25 * numAlign - 10) * numAlign - 55;
+      if (ver >= 7) result -= 36;
+    }
+    return result;
+  }
+  function dataCodewords(ver, ecl) {
+    return Math.floor(rawDataModules(ver) / 8) - ECC_CW[ecl][ver] * ECC_BLOCKS[ecl][ver];
+  }
+  function alignPositions(ver) {
+    if (ver === 1) return [];
+    var numAlign = Math.floor(ver / 7) + 2;
+    var step = (ver === 32) ? 26 : Math.ceil((ver * 4 + 4) / (numAlign * 2 - 2)) * 2;
+    var result = [6];
+    for (var pos = ver * 4 + 10; result.length < numAlign; pos -= step) result.splice(1, 0, pos);
+    return result;
+  }
+
+  /* ---- Galois field arithmetic (GF(256), poly 0x11D) ---- */
+  function gfMul(x, y) {
+    var z = 0;
+    for (var i = 7; i >= 0; i--) {
+      z = (z << 1) ^ ((z >>> 7) * 0x11D);
+      z ^= ((y >>> i) & 1) * x;
+    }
+    return z & 0xFF;
+  }
+  function rsDivisor(degree) {
+    var result = [];
+    for (var i = 0; i < degree - 1; i++) result.push(0);
+    result.push(1);
+    var root = 1;
+    for (var i = 0; i < degree; i++) {
+      for (var j = 0; j < result.length; j++) {
+        result[j] = gfMul(result[j], root);
+        if (j + 1 < result.length) result[j] ^= result[j + 1];
+      }
+      root = gfMul(root, 0x02);
+    }
+    return result;
+  }
+  function rsRemainder(data, divisor) {
+    var result = divisor.map(function () { return 0; });
+    data.forEach(function (b) {
+      var factor = b ^ result.shift();
+      result.push(0);
+      divisor.forEach(function (d, i) { result[i] ^= gfMul(d, factor); });
+    });
+    return result;
+  }
+
+  /* ---- UTF-8 bytes ---- */
+  function toBytes(str) {
+    var out = [];
+    for (var i = 0; i < str.length; i++) {
+      var c = str.charCodeAt(i);
+      if (c < 0x80) out.push(c);
+      else if (c < 0x800) { out.push(0xC0 | (c >> 6), 0x80 | (c & 63)); }
+      else if (c >= 0xD800 && c < 0xDC00 && i + 1 < str.length) {
+        var c2 = str.charCodeAt(++i);
+        var cp = 0x10000 + ((c - 0xD800) << 10) + (c2 - 0xDC00);
+        out.push(0xF0 | (cp >> 18), 0x80 | ((cp >> 12) & 63), 0x80 | ((cp >> 6) & 63), 0x80 | (cp & 63));
+      } else { out.push(0xE0 | (c >> 12), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63)); }
+    }
+    return out;
+  }
+
+  function encode(text, ecl, minVersion) {
+    ecl = ecl || 'M';
+    var bytes = toBytes(text);
+    var ver = -1;
+    for (var v = (minVersion || 1); v <= 40; v++) {
+      var cap = dataCodewords(v, ecl) * 8;
+      var ccBits = (v <= 9) ? 8 : 16;
+      if (4 + ccBits + bytes.length * 8 <= cap) { ver = v; break; }
+    }
+    if (ver < 0) throw new Error('Data too long for a QR code');
+
+    /* ---- bit stream ---- */
+    var bits = [];
+    function append(val, len) { for (var i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); }
+    append(4, 4);
+    append(bytes.length, ver <= 9 ? 8 : 16);
+    bytes.forEach(function (b) { append(b, 8); });
+
+    var capacity = dataCodewords(ver, ecl) * 8;
+    append(0, Math.min(4, capacity - bits.length));
+    append(0, (8 - bits.length % 8) % 8);
+    for (var pad = 0xEC; bits.length < capacity; pad ^= 0xEC ^ 0x11) append(pad, 8);
+
+    var dataCw = [];
+    for (var i = 0; i < bits.length; i += 8) {
+      var b = 0;
+      for (var j = 0; j < 8; j++) b = (b << 1) | bits[i + j];
+      dataCw.push(b);
+    }
+
+    /* ---- error correction + interleave ---- */
+    var numBlocks = ECC_BLOCKS[ecl][ver];
+    var blockEccLen = ECC_CW[ecl][ver];
+    var rawCw = Math.floor(rawDataModules(ver) / 8);
+    var numShort = numBlocks - rawCw % numBlocks;
+    var shortLen = Math.floor(rawCw / numBlocks) - blockEccLen;
+
+    var blocks = [], divisor = rsDivisor(blockEccLen), k = 0;
+    for (var i = 0; i < numBlocks; i++) {
+      var len = shortLen + (i < numShort ? 0 : 1);
+      var dat = dataCw.slice(k, k + len);
+      k += len;
+      blocks.push(dat.concat(rsRemainder(dat, divisor)));
+    }
+    var allCw = [];
+    var maxLen = shortLen + 1;
+    for (var i = 0; i < maxLen; i++)
+      for (var j = 0; j < numBlocks; j++)
+        if (i !== shortLen || j >= numShort) allCw.push(blocks[j][i]);
+    for (var i = 0; i < blockEccLen; i++)
+      for (var j = 0; j < numBlocks; j++)
+        allCw.push(blocks[j][blocks[j].length - blockEccLen + i]);
+
+    /* ---- matrix ---- */
+    var size = ver * 4 + 17;
+    var mod = [], fn = [];
+    for (var y = 0; y < size; y++) { mod.push(new Array(size).fill(false)); fn.push(new Array(size).fill(false)); }
+
+    function setFn(x, y, dark) {
+      if (x < 0 || y < 0 || x >= size || y >= size) return;
+      mod[y][x] = dark; fn[y][x] = true;
+    }
+    function finder(x, y) {
+      for (var dy = -4; dy <= 4; dy++) for (var dx = -4; dx <= 4; dx++) {
+        var d = Math.max(Math.abs(dx), Math.abs(dy));
+        setFn(x + dx, y + dy, d !== 2 && d !== 4);
+      }
+    }
+    /* timing */
+    for (var i = 0; i < size; i++) { setFn(6, i, i % 2 === 0); setFn(i, 6, i % 2 === 0); }
+    finder(3, 3); finder(size - 4, 3); finder(3, size - 4);
+
+    var ap = alignPositions(ver);
+    for (var i = 0; i < ap.length; i++) for (var j = 0; j < ap.length; j++) {
+      if ((i === 0 && j === 0) || (i === 0 && j === ap.length - 1) || (i === ap.length - 1 && j === 0)) continue;
+      for (var dy = -2; dy <= 2; dy++) for (var dx = -2; dx <= 2; dx++)
+        setFn(ap[j] + dx, ap[i] + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+    }
+
+    function drawFormat(mask) {
+      var data = ECL_BITS[ecl] << 3 | mask;
+      var rem = data;
+      for (var i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >>> 9) * 0x537);
+      var bitsF = ((data << 10) | rem) ^ 0x5412;
+      function g(i) { return ((bitsF >>> i) & 1) !== 0; }
+      for (var i = 0; i <= 5; i++) setFn(8, i, g(i));
+      setFn(8, 7, g(6)); setFn(8, 8, g(7)); setFn(7, 8, g(8));
+      for (var i = 9; i < 15; i++) setFn(14 - i, 8, g(i));
+      for (var i = 0; i < 8; i++) setFn(size - 1 - i, 8, g(i));
+      for (var i = 8; i < 15; i++) setFn(8, size - 15 + i, g(i));
+      setFn(8, size - 8, true);
+    }
+    if (ver >= 7) {
+      var rem = ver;
+      for (var i = 0; i < 12; i++) rem = (rem << 1) ^ ((rem >>> 11) * 0x1F25);
+      var bitsV = ver << 12 | rem;
+      for (var i = 0; i < 18; i++) {
+        var bit = ((bitsV >>> i) & 1) !== 0;
+        var a = size - 11 + i % 3, b = Math.floor(i / 3);
+        setFn(a, b, bit); setFn(b, a, bit);
+      }
+    }
+    drawFormat(0);
+
+    /* ---- place data ---- */
+    var idx = 0;
+    for (var right = size - 1; right >= 1; right -= 2) {
+      if (right === 6) right = 5;
+      for (var vert = 0; vert < size; vert++) {
+        for (var j = 0; j < 2; j++) {
+          var x = right - j;
+          var upward = ((right + 1) & 2) === 0;
+          var y = upward ? size - 1 - vert : vert;
+          if (!fn[y][x] && idx < allCw.length * 8) {
+            mod[y][x] = ((allCw[idx >>> 3] >>> (7 - (idx & 7))) & 1) !== 0;
+            idx++;
+          }
+        }
+      }
+    }
+
+    function applyMask(m) {
+      for (var y = 0; y < size; y++) for (var x = 0; x < size; x++) {
+        if (fn[y][x]) continue;
+        var invert;
+        switch (m) {
+          case 0: invert = (x + y) % 2 === 0; break;
+          case 1: invert = y % 2 === 0; break;
+          case 2: invert = x % 3 === 0; break;
+          case 3: invert = (x + y) % 3 === 0; break;
+          case 4: invert = (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0; break;
+          case 5: invert = x * y % 2 + x * y % 3 === 0; break;
+          case 6: invert = (x * y % 2 + x * y % 3) % 2 === 0; break;
+          case 7: invert = ((x + y) % 2 + x * y % 3) % 2 === 0; break;
+        }
+        if (invert) mod[y][x] = !mod[y][x];
+      }
+    }
+    function penalty() {
+      var p = 0;
+      for (var y = 0; y < size; y++) {
+        var run = 1, hist = [];
+        for (var x = 1; x < size; x++) {
+          if (mod[y][x] === mod[y][x - 1]) { run++; }
+          else { if (run >= 5) p += 3 + (run - 5); hist.push(run); run = 1; }
+        }
+        if (run >= 5) p += 3 + (run - 5);
+      }
+      for (var x = 0; x < size; x++) {
+        var run = 1;
+        for (var y = 1; y < size; y++) {
+          if (mod[y][x] === mod[y - 1][x]) run++;
+          else { if (run >= 5) p += 3 + (run - 5); run = 1; }
+        }
+        if (run >= 5) p += 3 + (run - 5);
+      }
+      for (var y = 0; y < size - 1; y++) for (var x = 0; x < size - 1; x++) {
+        var c = mod[y][x];
+        if (c === mod[y][x + 1] && c === mod[y + 1][x] && c === mod[y + 1][x + 1]) p += 3;
+      }
+      var pat = [true, false, true, true, true, false, true];
+      function matchAt(get, i, n) {
+        for (var k2 = 0; k2 < 7; k2++) if (get(i + k2) !== pat[k2]) return false;
+        var before = true, after = true;
+        for (var k2 = 1; k2 <= 4; k2++) { if (i - k2 >= 0 && get(i - k2)) before = false; }
+        for (var k2 = 0; k2 < 4; k2++) { if (i + 7 + k2 < n && get(i + 7 + k2)) after = false; }
+        return before || after;
+      }
+      for (var y = 0; y < size; y++) for (var x = 0; x + 7 <= size; x++)
+        if (matchAt(function (i) { return i >= 0 && i < size ? mod[y][i] : false; }, x, size)) p += 40;
+      for (var x = 0; x < size; x++) for (var y = 0; y + 7 <= size; y++)
+        if (matchAt(function (i) { return i >= 0 && i < size ? mod[i][x] : false; }, y, size)) p += 40;
+      var dark = 0;
+      for (var y = 0; y < size; y++) for (var x = 0; x < size; x++) if (mod[y][x]) dark++;
+      var total = size * size;
+      var kk = Math.ceil(Math.abs(dark * 20 - total * 10) / total) - 1;
+      p += kk * 10;
+      return p;
+    }
+
+    var bestMask = 0, minPenalty = Infinity;
+    for (var m = 0; m < 8; m++) {
+      applyMask(m); drawFormat(m);
+      var pen = penalty();
+      if (pen < minPenalty) { minPenalty = pen; bestMask = m; }
+      applyMask(m);
+    }
+    applyMask(bestMask); drawFormat(bestMask);
+
+    return { size: size, modules: mod, version: ver, ecl: ecl };
+  }
+
+  function toSvg(qr, border, dark, light) {
+    border = border == null ? 2 : border;
+    var dim = qr.size + border * 2;
+    var parts = [];
+    for (var y = 0; y < qr.size; y++) for (var x = 0; x < qr.size; x++)
+      if (qr.modules[y][x]) parts.push('M' + (x + border) + ',' + (y + border) + 'h1v1h-1z');
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + dim + ' ' + dim + '" shape-rendering="crispEdges">' +
+      '<rect width="100%" height="100%" fill="' + (light || '#fff') + '"/>' +
+      '<path d="' + parts.join('') + '" fill="' + (dark || '#000') + '"/></svg>';
+  }
+
+  return { encode: encode, toSvg: toSvg };
+})();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+/* ============================================================
+  PayHubble
+   Accounts and payment handles live in Supabase — real username +
+   password sign-in, synced to whatever device you sign in on. No
+   money moves through this app; it just shows people how to pay you.
+
+  Design: PayHubble design system (design.md) — one teal ramp sampled
+   from the logo, Poppins for display, Inter for body, tabular money.
+   ============================================================ */
+
+/* ---------- Supabase: one row per hub, locked down by Row Level Security ----------
+   Fill these in from your Supabase project (Settings -> API). The anon key is
+   meant to be public in client code like this one — see supabase-schema.sql
+   for the policies that keep every hub visible only to its owner. */
+var SUPABASE_URL = 'https://eyicpwnlwvrxwpvzmdqc.supabase.co';
+var SUPABASE_ANON_KEY = 'sb_publishable_TEtyVSMU-FSMAOviPvXCqw_ACOtV8IR';
+var supabase = (typeof window !== 'undefined' && window.supabase && SUPABASE_URL.indexOf('YOUR-PROJECT') === -1)
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+/* ============================================================
+   Logo motifs and iconography.
+   The badge is built from the same thick rounded strokes as the mark,
+   at --stroke weight, and its parts get reused as UI icons.
+   ============================================================ */
+var LOGO_SVG =
+  '<svg viewBox="0 0 48 48" fill="none" aria-hidden="true">' +
+  '<circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="2"/>' +
+  '<circle cx="24" cy="24" r="17" stroke="currentColor" stroke-width="1.1" opacity=".55"/>' +
+  '<path d="M24 10.5c4.1 3.5 6.3 8.2 6.3 13.3 0 2.5-.5 4.9-1.5 7.1h-9.6c-1-2.2-1.5-4.6-1.5-7.1 0-5.1 2.2-9.8 6.3-13.3Z" ' +
+  'stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>' +
+  '<path d="M19.7 27.6 16.2 31v3.3l3.5-1.9M28.3 27.6 31.8 31v3.3l-3.5-1.9" ' +
+  'stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>' +
+  '<path d="M24 17.6v6.9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
+  '<path d="M25.9 19.2c-.5-.6-1.2-.9-2-.9-1.1 0-1.9.6-1.9 1.4 0 2 3.9 1.2 3.9 3.2 0 .9-.9 1.5-2 1.5-.8 0-1.6-.4-2.1-1" ' +
+  'stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
+  '</svg>';
+
+var SPARK_SVG =
+  '<svg viewBox="0 0 120 120" fill="none" aria-hidden="true">' +
+  '<path d="M78 14l3.6 10.4L92 28l-10.4 3.6L78 42l-3.6-10.4L64 28l10.4-3.6z" fill="currentColor"/>' +
+  '<path d="M40 44l2.4 6.8L49 53l-6.6 2.2L40 62l-2.4-6.8L31 53l6.6-2.2z" fill="currentColor"/>' +
+  '<path d="M96 62l1.8 5.2L103 69l-5.2 1.8L96 76l-1.8-5.2L89 69l5.2-1.8z" fill="currentColor"/>' +
+  '</svg>';
+
+var SPARKLE_ONE =
+  '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+  '<path d="M12 2l2.2 6.3L20.5 10.5l-6.3 2.2L12 19l-2.2-6.3L3.5 10.5l6.3-2.2z" fill="currentColor"/></svg>';
+
+/* Tab icons — 1.5px strokes, same confident weight as the badge. */
+function icon(d, extra) {
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" ' +
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
+}
+var ICONS = {
+  sell: icon('<rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/>' +
+    '<rect x="3" y="14" width="7" height="7" rx="1.6"/><path d="M14 14h3v3h-3zM20 14h1M14 20h3M20 17v4"/>'),
+  page: icon('<rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 8h8M8 12h8M8 16h5"/>'),
+  card: icon('<rect x="2.5" y="5" width="19" height="14" rx="3.5"/><path d="M2.5 10h19M6.5 15h4"/>'),
+  wallet: icon('<path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/>' +
+    '<path d="M3 8h13M16.5 13.5h1.5"/>'),
+  activity: icon('<path d="M3 20h18M6 20v-5.5M11 20V8M16 20v-8.5"/><path d="M6 9.5l5-4 5 3 3-4.5"/>'),
+  settings: icon('<path d="M4 7h9M18.5 7H21M4 17h4.5M14 17h7"/><circle cx="15.5" cy="7" r="2.5"/><circle cx="11" cy="17" r="2.5"/>'),
+  rocket: icon('<path d="M12 3.5c3.4 2.9 5.2 6.8 5.2 11 0 2-.4 4-1.2 5.9H8c-.8-1.9-1.2-3.9-1.2-5.9 0-4.2 1.8-8.1 5.2-11Z"/>' +
+    '<path d="M8.4 17.4 5.5 20.2v2.6M15.6 17.4l2.9 2.8v2.6"/><circle cx="12" cy="10.5" r="2"/>'),
+  hub: icon('<circle cx="12" cy="12" r="2.5"/><circle cx="5" cy="6" r="1.8"/><circle cx="19" cy="6" r="1.8"/>' +
+    '<circle cx="5" cy="18" r="1.8"/><circle cx="19" cy="18" r="1.8"/>' +
+    '<path d="M6.4 7.3 10.2 10.6M17.6 7.3 13.8 10.6M6.4 16.7 10.2 13.4M17.6 16.7 13.8 13.4"/>')
+};
+
+/* The Apple logo lives in a private-use codepoint that only Apple devices have a
+   font for — everyone else gets a tofu box. Fall back to a plain letter. */
+var APPLE_GLYPH = (typeof navigator !== 'undefined' &&
+  /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent || '')) ? '' : 'A';
+
+/* ---------- payment method catalog ----------
+   Each method keeps its own recognizable brand color — buyers scan for the color
+   they know. "fg" is the glyph color that actually reads on that brand color;
+   the method name always sits in --ph-text next to it, never white-on-brand. */
+var METHODS = [
+  {
+    k: 'v', id: 'venmo', name: 'Venmo', color: '#008CFF', fg: '#FFFFFF', icon: 'V',
+    ph: '@your-venmo', hint: 'Your Venmo username',
+    payNote: 'Opens the Venmo app if you have it, otherwise venmo.com.',
+    link: function (val, amt, note) {
+      var h = val.replace(/^@/, '').trim();
+      if (/^https?:/i.test(val)) return val;
+      var u = 'https://venmo.com/' + encodeURIComponent(h);
+      var q = [];
+      if (amt) { q.push('txn=pay'); q.push('amount=' + encodeURIComponent(amt)); }
+      if (note) q.push('note=' + encodeURIComponent(note));
+      return q.length ? u + '?' + q.join('&') : u;
+    }
+  },
+  {
+    k: 'p', id: 'paypal', name: 'PayPal', color: '#003087', fg: '#FFFFFF', icon: 'P',
+    ph: 'your-paypal-me-name', hint: 'Your PayPal.Me name',
+    payNote: 'Opens PayPal.Me with the amount already filled in.',
+    link: function (val, amt) {
+      if (/^https?:/i.test(val)) return val;
+      var h = val.replace(/^@/, '').trim();
+      return 'https://paypal.me/' + encodeURIComponent(h) + (amt ? '/' + encodeURIComponent(amt) : '');
+    }
+  },
+  {
+    k: 'c', id: 'cashapp', name: 'Cash App', color: '#00D64F', fg: '#14282E', icon: '$',
+    ph: '$yourcashtag', hint: 'Your $Cashtag',
+    payNote: 'Opens Cash App with the amount already filled in.',
+    link: function (val, amt) {
+      if (/^https?:/i.test(val)) return val;
+      var h = val.trim().replace(/^\$?/, '');
+      return 'https://cash.app/$' + encodeURIComponent(h) + (amt ? '/' + encodeURIComponent(amt) : '');
+    }
+  },
+  { k: 'z', id: 'zelle', name: 'Zelle', color: '#6D1ED4', fg: '#FFFFFF', icon: 'Z', ph: 'phone or email', hint: 'Phone number or email registered with Zelle', link: null },
+  { k: 'a', id: 'applecash', name: 'Apple Cash', color: '#14282E', fg: '#FFFFFF', icon: APPLE_GLYPH, ph: 'phone number', hint: 'Phone number for iMessage / Apple Cash', link: null },
+  { k: 'g', id: 'googlepay', name: 'Google Pay', color: '#5F6368', fg: '#FFFFFF', icon: 'G', ph: 'phone or email', hint: 'Phone or email on your Google Pay account', link: null },
+  { k: 'h', id: 'cash', name: 'Cash', color: '#0F6B51', fg: '#FFFFFF', icon: '¢', ph: 'e.g. Exact change appreciated', hint: 'A short note for people paying in cash', link: null }
+];
+var M_BY_K = {}; METHODS.forEach(function (m) { M_BY_K[m.k] = m; });
+
+/* ---------- themes for the buyer's page ----------
+   The campaign color substitutes for --ph-teal-700 in the header band and the
+   primary button only. Type, radii and chips stay fixed, so a buyer still
+  recognizes a PayHubble page whoever's colors are on it. */
+var THEMES = {
+  teal: { name: 'PayHubble teal', primary: '#165564', accent: '#0E3742', tint: '#EAF7F5', line: '#DBDFE2', on: '#FFFFFF' },
+  navy: { name: 'Navy', primary: '#1E2A78', accent: '#131C55', tint: '#EEF0F7', line: '#D8DCE8', on: '#FFFFFF' },
+  green: { name: 'Forest', primary: '#0F6B51', accent: '#0B4636', tint: '#EAF5F1', line: '#D6E4DE', on: '#FFFFFF' },
+  maroon: { name: 'Maroon', primary: '#7A1F2B', accent: '#4A0F18', tint: '#F7EFF0', line: '#E5D8DA', on: '#FFFFFF' },
+  purple: { name: 'Purple', primary: '#4C1D95', accent: '#2E1065', tint: '#F2EEFA', line: '#DED6EE', on: '#FFFFFF' },
+  ink: { name: 'Ink', primary: '#14282E', accent: '#0B171B', tint: '#EDF1F4', line: '#DBDFE2', on: '#FFFFFF' }
+};
+var THEME_ORDER = ['teal', 'navy', 'green', 'maroon', 'purple', 'ink'];
+function theme(key) { return THEMES[key] || THEMES.teal; }
+
+/* Optional page-builder fields. Each rides in the link only when it is filled in,
+   so a plain "pay me" link stays short enough for a cheap NFC tag. */
+var PAGE_FIELDS = [
+  { k: 'm', id: 'themeKey' },
+  { k: 't', id: 'title' },
+  { k: 'e', id: 'eyebrow' },
+  { k: 'b', id: 'blurb' },
+  { k: 'k', id: 'presets' },
+  { k: 'w', id: 'aboutTitle' },
+  { k: 'o', id: 'about' },
+  { k: 'l', id: 'pills' },
+  { k: 'y', id: 'badge' },
+  { k: 'f', id: 'footer' }
+];
+var PF_BY_K = {}; PAGE_FIELDS.forEach(function (f) { PF_BY_K[f.k] = f; });
+
+function blankPage() {
+  return {
+    themeKey: 'teal', title: '', eyebrow: '', blurb: '',
+    presets: '', aboutTitle: '', about: '', pills: '', badge: '', footer: ''
+  };
+}
+function parsePresets(str) {
+  var list = String(str || '').split(/[,\s]+/)
+    .map(function (s) { return parseFloat(String(s).replace(/[^0-9.]/g, '')); })
+    .filter(function (n) { return isFinite(n) && n > 0; });
+  return list.slice(0, 6);
+}
+/* Custom methods stay inside the teal ramp — the brand colors above are reserved
+   for the apps people actually recognize. */
+var CUSTOM_COLORS = ['#2B6774', '#165564', '#42848F', '#0E3742', '#569FA5', '#0F6B51'];
+
+/* ---------- compact profile <-> link encoding ----------
+   Format (kept deliberately terse so it fits on a cheap NFC tag):
+     1~Name~v:handle~p:handle~x:Label:value~$:12.50~n:note
+   Fields joined by "~". First field is the format version.
+   Only ~ % and # are escaped inside values; everything else rides as-is. */
+function esc(s) { return String(s == null ? '' : s); }
+function encField(s) {
+  return String(s).replace(/%/g, '%25').replace(/~/g, '%7E').replace(/#/g, '%23')
+    .replace(/[^\x20-\x7E]/g, function (c) { return encodeURIComponent(c); });
+}
+function decField(s) { try { return decodeURIComponent(s); } catch (e) { return s; } }
+
+function encodeProfile(profile, amount, note, page) {
+  var parts = ['1', encField(profile.name || '')];
+  METHODS.forEach(function (m) {
+    var v = (profile[m.id] || '').trim();
+    if (v) parts.push(m.k + ':' + encField(v));
+  });
+  (profile.custom || []).forEach(function (c) {
+    if (c.label && c.value) parts.push('x:' + encField(c.label) + ':' + encField(c.value));
+  });
+  if (amount) parts.push('$:' + encField(amount));
+  if (note) parts.push('n:' + encField(note));
+  if (page) {
+    PAGE_FIELDS.forEach(function (f) {
+      var v = (page[f.id] || '').toString().trim();
+      /* the default theme is implied, so it costs nothing to leave out */
+      if (f.id === 'themeKey' && (!v || v === 'teal')) return;
+      if (v) parts.push(f.k + ':' + encField(v));
+    });
+  }
+  return parts.join('~');
+}
+function decodeProfile(str) {
+  var parts = String(str).split('~');
+  if (parts[0] !== '1') return null;
+  var p = { name: decField(parts[1] || ''), custom: [] }, amount = '', note = '';
+  var page = blankPage();
+  for (var i = 2; i < parts.length; i++) {
+    var f = parts[i]; if (!f) continue;
+    var ci = f.indexOf(':'); if (ci < 0) continue;
+    var key = f.slice(0, ci), val = f.slice(ci + 1);
+    if (key === 'x') {
+      var ci2 = val.indexOf(':');
+      if (ci2 > -1) p.custom.push({ id: 'c' + i, label: decField(val.slice(0, ci2)), value: decField(val.slice(ci2 + 1)) });
+    } else if (key === '$') { amount = decField(val); }
+    else if (key === 'n') { note = decField(val); }
+    else if (M_BY_K[key]) { p[M_BY_K[key].id] = decField(val); }
+    else if (PF_BY_K[key]) { page[PF_BY_K[key].id] = decField(val); }
+  }
+  return { profile: p, amount: amount, note: note, page: page };
+}
+
+/* ---------- app state ---------- */
+var S = {
+  user: null,               /* {name, pin} */
+  profile: null,            /* {name, venmo, paypal, ..., custom:[]} */
+  page: null,               /* the buyer-facing page: title, blurb, theme, presets, about */
+  settings: { baseUrl: '', qrMode: 'page', shareMethod: '', passUrl: '' },
+  activity: [],             /* [{id, amount, note, date, method, paid}] */
+  view: 'sell',
+  draftAmount: '',
+  draftNote: '',
+  customerData: null,       /* set when the page is opened from a shared link */
+  previewOn: false,
+  fullscreen: false,       /* the big code for a booth table */
+  nfcSupported: (typeof window !== 'undefined' && 'NDEFReader' in window)
+};
+
+function uid() { return Math.random().toString(36).slice(2, 9); }
+/* Every currency figure is tabular and carries cents. */
+function money(n) {
+  return '$' + (Number(n) || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+/* Hero figures raise the symbol to 0.6em, per the type scale. */
+function moneyHero(n) {
+  return '<span class="sym">$</span>' +
+    (Number(n) || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function utf8Length(value) {
+  return new TextEncoder().encode(String(value)).length;
+}
+function todayISO() { return new Date().toISOString().slice(0, 10); }
+function h(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function toast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm = setTimeout(function () { t.classList.remove('show'); }, 2200);
+}
+/* The one expressive animation, reserved for money landing. Once, per event. */
+function celebrate() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var wrap = document.createElement('div');
+  wrap.className = 'celebrate';
+  var spots = [[46, 38], [54, 44], [40, 52], [60, 34], [50, 30]];
+  spots.forEach(function (s, i) {
+    var el = document.createElement('i');
+    el.style.left = s[0] + '%'; el.style.top = s[1] + '%';
+    el.style.animationDelay = (i * 45) + 'ms';
+    el.innerHTML = SPARKLE_ONE;
+    wrap.appendChild(el);
+  });
+  document.body.appendChild(wrap);
+  setTimeout(function () { wrap.remove(); }, 900);
+}
+function blankProfile(name) {
+  var p = { name: name || '', custom: [] };
+  METHODS.forEach(function (m) { p[m.id] = ''; });
+  return p;
+}
+function filledMethods(p) {
+  var out = [];
+  METHODS.forEach(function (m) { if ((p[m.id] || '').trim()) out.push({ m: m, value: p[m.id].trim() }); });
+  (p.custom || []).forEach(function (c, i) {
+    if (c.label && c.value) out.push({
+      m: {
+        id: 'custom-' + i, name: c.label, color: CUSTOM_COLORS[i % CUSTOM_COLORS.length], fg: '#FFFFFF',
+        icon: (c.label[0] || '?').toUpperCase(), link: null, custom: true
+      }, value: c.value
+    });
+  });
+  return out;
+}
+
+/* ---------- link building ---------- */
+function baseUrl() {
+  var b = httpUrl(S.settings.baseUrl);
+  if (b) return b.replace(/[#?].*$/, '');
+  var loc = location.href.replace(/[#?].*$/, '');
+  return loc;
+}
+function httpUrl(value) {
+  var raw = String(value || '').trim();
+  if (!raw || /^[a-z][a-z\d+.-]*:/i.test(raw) && !/^https?:\/\//i.test(raw)) return '';
+  try {
+    var parsed = new URL(/^https?:\/\//i.test(raw) ? raw : 'https://' + raw);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:' ? parsed.href : '';
+  } catch (e) { return ''; }
+}
+function isHosted() {
+  var b = baseUrl();
+  return /^https?:\/\//i.test(b) && !/^https?:\/\/localhost/i.test(b);
+}
+function shareLink(amount, note) {
+  return baseUrl() + '#' + encodeProfile(S.profile, amount, note, S.page);
+}
+function textCard(amount, note) {
+  var lines = [];
+  lines.push('Pay ' + (S.profile.name || 'me') + (amount ? ' ' + money(amount) : ''));
+  if (note) lines.push(note);
+  filledMethods(S.profile).forEach(function (f) { lines.push(f.m.name + ': ' + f.value); });
+  return lines.join('\n');
+}
+function singleLink(amount, note) {
+  var f = filledMethods(S.profile).filter(function (x) { return x.m.link; });
+  var chosen = f.filter(function (x) { return x.m.id === S.settings.shareMethod; })[0] || f[0];
+  if (!chosen) return null;
+  return { name: chosen.m.name, url: chosen.m.link(chosen.value, amount, note) };
+}
+function qrPayload(amount, note) {
+  var mode = S.settings.qrMode || 'page';
+  if (mode === 'single') { var s = singleLink(amount, note); return s ? s.url : textCard(amount, note); }
+  if (mode === 'text') return textCard(amount, note);
+  return shareLink(amount, note);
+}
+/* Rough NDEF size: 1-byte URI prefix code + the rest of the URL, plus ~7 bytes record overhead. */
+function ndefBytes(url) {
+  var body = url.replace(/^https:\/\/www\./i, '').replace(/^https:\/\//i, '').replace(/^http:\/\//i, '');
+  return new TextEncoder().encode(body).length + 8;
+}
+function tagFit(bytes) {
+  if (bytes <= 132) return { label: 'Fits any tag (NTAG213+)', cls: 'ok' };
+  if (bytes <= 480) return { label: 'Needs NTAG215 or bigger', cls: 'warn' };
+  if (bytes <= 860) return { label: 'Needs NTAG216', cls: 'warn' };
+  return { label: 'Too big for common tags', cls: 'err' };
+}
+
+/* ---------- QR rendering ----------
+   Modules in --ph-text, never pure black, always on white so a phone
+   camera has the contrast it needs whatever the app theme is doing. */
+function qrSvg(text, dark) {
+  try {
+    var byteLength = utf8Length(text);
+    var ecl = byteLength > 900 ? 'L' : (byteLength > 300 ? 'M' : 'Q');
+    return QR.toSvg(QR.encode(text, ecl), 2, dark || '#14282E', '#FFFFFF');
+  } catch (e) {
+    return '<div class="empty">That is too much data for one QR code &mdash; shorten your note or use a hosted link.</div>';
+  }
+}
+
+/* ---------- the reusable card (no amount baked in) ---------- */
+function cardPayload() {
+  if (isHosted()) return shareLink('', '');
+  var s = singleLink('', '');
+  if (s) return s.url;
+  return textCard('', '');
+}
+
+/* Draw the payment card to a canvas at print/retina resolution and hand back a PNG. */
+function drawCardImage() {
+  var rows = Math.min(filledMethods(S.profile).length, 6) +
+    (filledMethods(S.profile).length > 6 ? 1 : 0);
+  var W = 1000, H = 1022 + Math.max(rows, 1) * 74 + 56;
+  var c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  var g = c.getContext('2d');
+  var DISP = 'Poppins, "Century Gothic", Helvetica, Arial, sans-serif';
+  var BODY = 'Inter, Helvetica, Arial, sans-serif';
+
+  function rr(x, y, w, hh, r) {
+    g.beginPath();
+    g.moveTo(x + r, y); g.lineTo(x + w - r, y); g.quadraticCurveTo(x + w, y, x + w, y + r);
+    g.lineTo(x + w, y + hh - r); g.quadraticCurveTo(x + w, y + hh, x + w - r, y + hh);
+    g.lineTo(x + r, y + hh); g.quadraticCurveTo(x, y + hh, x, y + hh - r);
+    g.lineTo(x, y + r); g.quadraticCurveTo(x, y, x + r, y); g.closePath();
+  }
+  function fit(text, px, maxW, fam) {
+    g.font = '600 ' + px + 'px ' + (fam || BODY);
+    var t = String(text);
+    while (g.measureText(t).width > maxW && t.length > 4) t = t.slice(0, -2);
+    return t === String(text) ? t : t + '…';
+  }
+  function tracked(text, x, y, px, track, fam, weight) {
+    g.font = (weight || 600) + ' ' + px + 'px ' + (fam || DISP);
+    var chars = String(text).split('');
+    var total = chars.reduce(function (s, ch) { return s + g.measureText(ch).width + track; }, -track);
+    var cx = x - total / 2;
+    chars.forEach(function (ch) {
+      g.textAlign = 'left';
+      g.fillText(ch, cx, y);
+      cx += g.measureText(ch).width + track;
+    });
+    g.textAlign = 'center';
+  }
+
+  g.fillStyle = '#FFFFFF'; g.fillRect(0, 0, W, H);
+
+  /* header — the deep end of the signature gradient, so white type sits at 6.4:1+ */
+  var grd = g.createLinearGradient(0, 0, W * .6, 300);
+  grd.addColorStop(0, '#2B6774'); grd.addColorStop(1, '#0E3742');
+  g.fillStyle = grd; g.fillRect(0, 0, W, 300);
+
+  g.textAlign = 'center';
+  g.fillStyle = 'rgba(255,255,255,.8)';
+  tracked('SCAN TO PAY', W / 2, 96, 26, 3.6, DISP, 600);
+
+  g.fillStyle = '#FFFFFF';
+  g.font = '600 76px ' + DISP;
+  g.fillText(fit(S.profile.name || 'me', 76, W - 120, DISP), W / 2, 200);
+
+  var fm = filledMethods(S.profile);
+  g.fillStyle = 'rgba(255,255,255,.82)';
+  g.font = '400 27px ' + BODY;
+  g.fillText(fm.length + (fm.length === 1 ? ' way to pay' : ' ways to pay'), W / 2, 248);
+
+  /* QR panel — border and shadow together, like the double-outlined badge */
+  var panelY = 340, panelH = 620;
+  g.fillStyle = '#FFFFFF';
+  g.strokeStyle = '#DBDFE2'; g.lineWidth = 3;
+  rr(70, panelY, W - 140, panelH, 44); g.fill(); g.stroke();
+
+  var payload = cardPayload();
+  try {
+    var qr = QR.encode(payload, utf8Length(payload) > 300 ? 'M' : 'Q');
+    var quiet = 2, units = qr.size + quiet * 2;
+    var box = panelH - 90;
+    var cell = Math.floor(box / units);
+    var qrPx = cell * units;
+    var ox = Math.round((W - qrPx) / 2), oy = Math.round(panelY + (panelH - qrPx) / 2) - 14;
+    g.fillStyle = '#FFFFFF'; g.fillRect(ox, oy, qrPx, qrPx);
+    g.fillStyle = '#14282E';
+    for (var y = 0; y < qr.size; y++) for (var x = 0; x < qr.size; x++) {
+      if (qr.modules[y][x]) g.fillRect(ox + (x + quiet) * cell, oy + (y + quiet) * cell, cell, cell);
+    }
+    g.fillStyle = '#5B6670';
+    g.font = '400 24px ' + BODY;
+    var cap = 'Point any phone camera here';
+    if (!isHosted()) {
+      var one = singleLink('', '');
+      if (one) cap = 'Opens ' + one.name + ' — the rest are listed below';
+    }
+    g.fillText(cap, W / 2, panelY + panelH - 30);
+  } catch (e) {
+    g.fillStyle = '#5B6670'; g.font = '400 28px ' + BODY;
+    g.fillText('Too much data for one code', W / 2, panelY + panelH / 2);
+  }
+
+  /* method list */
+  var ly = panelY + panelH + 62;
+  g.textAlign = 'left';
+  fm.slice(0, 6).forEach(function (f) {
+    g.fillStyle = f.m.color;
+    rr(70, ly - 30, 44, 44, 14); g.fill();
+    g.fillStyle = f.m.fg || '#FFFFFF';
+    g.font = '600 22px ' + DISP;
+    g.textAlign = 'center';
+    g.fillText(String(f.m.icon || f.m.name[0]).toUpperCase(), 92, ly + 1);
+    g.textAlign = 'left';
+    g.fillStyle = '#14282E';
+    g.font = '600 28px ' + DISP;
+    g.fillText(f.m.name, 136, ly - 4);
+    g.fillStyle = '#5B6670';
+    g.font = '400 25px ' + BODY;
+    g.fillText(fit(f.value, 25, W - 300), 136, ly + 28);
+    ly += 74;
+  });
+  if (fm.length > 6) {
+    g.fillStyle = '#5B6670'; g.font = '400 25px ' + BODY;
+    g.fillText('+ ' + (fm.length - 6) + ' more on the page', 136, ly - 4);
+  }
+
+  g.fillStyle = '#8D989E';
+  tracked('PAYHUBBLE', W / 2, H - 38, 22, 3.1, DISP, 600);
+
+  return c.toDataURL('image/png');
+}
+
+/* ---------- wallet pass endpoints ---------- */
+function passUrl(kind) {
+  var ep = httpUrl(S.settings.passUrl);
+  if (!ep) return null;
+  var q = 'p=' + kind +
+    '&d=' + encodeURIComponent(encodeProfile(S.profile, '', '', S.page)) +
+    '&u=' + encodeURIComponent(cardPayload());
+  return ep + (ep.indexOf('?') > -1 ? '&' : '?') + q;
+}
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+function badgeArt(cls) {
+  return '<span class="badge-art ' + (cls || '') + '">' + LOGO_SVG + '</span>';
+}
+
+function viewSignIn() {
+  var mode = S.authMode || 'signin';
+  var busy = !!S.authBusy;
+  var err = S.authError || '';
+  return '<div class="wrap">' +
+    '<div class="hero"><div class="spark">' + SPARK_SVG + '</div>' +
+    '<p class="kicker">Ready to launch</p>' +
+    '<h2>Get paid, fast.</h2>' +
+    '<p>Save your Venmo, PayPal, Cash App and the rest once. Sign in and they follow you to any device.</p></div>' +
+    '<div class="card">' +
+    '<div class="seg">' +
+    '<button data-act="authmode" data-m="signin"' + (mode === 'signin' ? ' class="on"' : '') + '>Sign in</button>' +
+    '<button data-act="authmode" data-m="signup"' + (mode === 'signup' ? ' class="on"' : '') + '>Create account</button>' +
+    '</div>' +
+    (!supabase ? '<div class="note" style="margin-top:14px">' +
+      '<b>Setup needed:</b> this app has not been connected to an account service yet. ' +
+      'A site owner needs to fill in <code>SUPABASE_URL</code> and <code>SUPABASE_ANON_KEY</code> near the top of payhub.html ' +
+      '(see supabase-schema.sql for the one-time database setup).</div>' : '') +
+    (err ? '<div class="note" style="margin-top:14px;background:var(--ph-danger-bg);border-color:transparent;color:var(--ph-danger-fg)">' + h(err) + '</div>' : '') +
+    '<div style="margin-top:16px"><label for="au-username">Username</label>' +
+    '<input type="text" id="au-username" placeholder="e.g. elizabeth" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"></div>' +
+    (mode === 'signup' ? '<div style="margin-top:14px"><label for="au-email">Email <span style="font-weight:400">(only used if you forget your password)</span></label>' +
+      '<input type="text" id="au-email" placeholder="you@example.com" autocomplete="email" autocapitalize="none" autocorrect="off" spellcheck="false"></div>' : '') +
+    '<div style="margin-top:14px"><label for="au-password">Password</label>' +
+    '<input type="password" id="au-password" placeholder="••••••••" autocomplete="' + (mode === 'signup' ? 'new-password' : 'current-password') + '"></div>' +
+    (mode === 'signup' ? '<div style="margin-top:14px"><label for="au-password2">Confirm password</label>' +
+      '<input type="password" id="au-password2" placeholder="••••••••" autocomplete="new-password"></div>' : '') +
+    '<button class="btn btn-primary btn-block" data-act="' + (mode === 'signup' ? 'signup' : 'signin') + '"' + (busy ? ' disabled' : '') + '>' +
+    (busy ? 'Please wait…' : (mode === 'signup' ? 'Create my hub' : 'Sign in')) + '</button>' +
+    (mode === 'signin' ? '<button class="btn btn-ghost btn-block" data-act="forgot-password">Forgot password?</button>' : '') +
+    '</div></div>';
+}
+
+function viewSetNewPassword() {
+  var busy = !!S.authBusy;
+  var err = S.authError || '';
+  return '<div class="wrap"><div class="card center" style="margin-top:60px;text-align:left">' +
+    '<h2>Choose a new password</h2>' +
+    '<p class="helper">You followed a password reset link. Pick a new password to finish.</p>' +
+    (err ? '<div class="note" style="margin-top:14px;background:var(--ph-danger-bg);border-color:transparent;color:var(--ph-danger-fg)">' + h(err) + '</div>' : '') +
+    '<div style="margin-top:14px"><label for="np-password">New password</label>' +
+    '<input type="password" id="np-password" placeholder="••••••••" autocomplete="new-password"></div>' +
+    '<div style="margin-top:14px"><label for="np-password2">Confirm new password</label>' +
+    '<input type="password" id="np-password2" placeholder="••••••••" autocomplete="new-password"></div>' +
+    '<button class="btn btn-primary btn-block" data-act="set-new-password"' + (busy ? ' disabled' : '') + '>' +
+    (busy ? 'Please wait…' : 'Save new password') + '</button>' +
+    '</div></div>';
+}
+
+function viewLoading() {
+  return '<div class="wrap"><div class="card center" style="margin-top:60px">' +
+    '<p class="helper">Loading your hub…</p></div></div>';
+}
+
+function viewSell() {
+  var amt = S.draftAmount, note = S.draftNote;
+  var methods = filledMethods(S.profile);
+  var payload = qrPayload(amt, note);
+  var bytes = ndefBytes(payload);
+  var fit = tagFit(bytes);
+  var mode = S.settings.qrMode || 'page';
+
+  var html = '<div class="wrap">';
+
+  if (!methods.length) {
+    html += '<div class="card"><div class="empty">' + badgeArt() +
+      '<b>Nothing to share yet</b><br>Your code is empty until you save one way to pay you.</div>' +
+      '<button class="btn btn-primary btn-block" data-act="go" data-v="wallet">Set up my wallet</button></div>';
+    return html + '</div>';
+  }
+
+  html += '<div class="card"><h2>Amount</h2>' +
+    '<p class="helper">Optional. Leave it blank to just share your payment options.</p>' +
+    '<div class="big-amount" id="amt-display">' + moneyHero(amt || 0) + '</div>' +
+    '<div class="numpad">' +
+    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '⌫'].map(function (k) {
+      return '<button data-act="pad" data-k="' + k + '">' + k + '</button>';
+    }).join('') +
+    '</div>' +
+    '<div style="margin-top:16px"><label for="sell-note">What is it for?</label>' +
+    '<input type="text" id="sell-note" value="' + h(note) + '" placeholder="e.g. 3 boxes of cookies" data-live="note"></div>' +
+    (amt ? '<div class="center" style="margin-top:12px"><button class="btn btn-ghost btn-sm" data-act="clear-amt">Clear amount</button></div>' : '') +
+    '</div>';
+
+  html += '<div class="card"><h2>Show this to your customer</h2>' +
+    '<div class="seg">' +
+    '<button data-act="qrmode" data-m="page"' + (mode === 'page' ? ' class="on"' : '') + '>All methods</button>' +
+    '<button data-act="qrmode" data-m="single"' + (mode === 'single' ? ' class="on"' : '') + '>One app</button>' +
+    '<button data-act="qrmode" data-m="text"' + (mode === 'text' ? ' class="on"' : '') + '>Plain text</button>' +
+    '</div>';
+
+  if (mode === 'page' && !isHosted()) {
+    html += '<div class="note" style="margin-top:14px"><b>Heads up:</b> &ldquo;All methods&rdquo; sends people to a web page, ' +
+      'so this app has to live at a real web address first. Until then use <b>One app</b> or <b>Plain text</b> &mdash; ' +
+      'both work right now with no setup. <a href="#" data-act="go" data-v="settings">Set my web address</a></div>';
+  }
+  if (mode === 'single') {
+    var sl = singleLink(amt, note);
+    html += '<div style="margin-top:14px"><label for="single-sel">Which app?</label><select id="single-sel" data-live="single">' +
+      methods.filter(function (x) { return x.m.link; }).map(function (x) {
+        return '<option value="' + h(x.m.id) + '"' + (sl && x.m.name === sl.name ? ' selected' : '') + '>' + h(x.m.name) + '</option>';
+      }).join('') + '</select>' +
+      '<p class="helper">Opens straight into ' + h(sl ? sl.name : '') + (amt ? ' with ' + money(amt) + ' already filled in.' : '.') + '</p></div>';
+  }
+
+  html += '<div class="qrbox" style="margin-top:14px">' + qrSvg(payload) + '</div>' +
+    '<p class="helper center">' + (mode === 'text'
+      ? 'Their camera will show this as text they can read and copy.'
+      : 'Any phone camera scans this &mdash; no app needed.') + '</p>';
+
+  html += '<button class="btn btn-primary btn-block" data-act="fs-enter">Show full screen</button>' +
+    '<button class="btn btn-secondary btn-block" data-act="share">Send as a text or link</button>' +
+    '<button class="btn btn-ghost btn-block" data-act="copy" data-val="' + h(payload) + '">Copy</button>';
+
+  if (amt) html += '<button class="btn btn-ghost btn-block" data-act="log-sale">Log this as a request</button>';
+  html += '<details class="raw"><summary>Show the raw link</summary>' +
+    '<div class="linkbox" style="margin-top:8px">' + h(payload) + '</div></details>';
+  html += '</div>';
+
+  /* NFC card */
+  html += '<div class="card"><h2>Write it to an NFC tag</h2>';
+  if (mode === 'text') {
+    html += '<p class="helper">Switch to <b>All methods</b> or <b>One app</b> first &mdash; a tag has to hold a link for the tap to open anything.</p>';
+  } else {
+    html += '<p class="helper">Hold a blank NFC sticker or card against the back of your phone and tap the button. ' +
+      'After that, anyone who taps the tag &mdash; iPhone or Android &mdash; goes straight to your payment options.</p>' +
+      '<div class="pill-row"><span class="chip">' + bytes + ' bytes</span><span class="chip ' + fit.cls + '">' + h(fit.label) + '</span></div>';
+    if (S.nfcSupported) {
+      html += '<button class="btn btn-primary btn-block" data-act="nfc-write" data-val="' + h(payload) + '">Write to tag</button>' +
+        '<button class="btn btn-ghost btn-block" data-act="nfc-read">Read a tag</button>';
+    } else {
+      html += '<div class="note blue" style="margin-top:14px">Your phone or browser cannot write NFC tags. ' +
+        'Writing needs <b>Chrome on Android</b> over https. iPhones can <i>read</i> the tag once it is written &mdash; ' +
+        'they just cannot write it. Any cheap NFC writer app also works.</div>';
+    }
+  }
+  html += '</div>';
+
+  html += '<button class="btn btn-secondary btn-block" data-act="preview">Preview what they will see</button>';
+  return html + '</div>';
+}
+
+function viewWallet() {
+  var p = S.profile;
+  var html = '<div class="wrap"><div class="card"><h2>Your payment methods</h2>' +
+    '<p class="helper">Fill in whichever you actually use. Blank ones are simply left out. ' +
+    'Nothing here processes money &mdash; it only shows people where to send it.</p>' +
+    '<div style="margin-top:8px">';
+
+  METHODS.forEach(function (m) {
+    html += '<div class="pm-field">' +
+      '<div class="ic" style="background:' + m.color + ';color:' + m.fg + '">' + h(m.icon) + '</div>' +
+      '<div class="bd"><label for="wf-' + m.id + '">' + h(m.name) + '</label>' +
+      '<input type="text" id="wf-' + m.id + '" value="' + h(p[m.id] || '') + '" placeholder="' + h(m.ph) + '" ' +
+      'autocapitalize="none" autocorrect="off" spellcheck="false"></div></div>';
+  });
+
+  (p.custom || []).forEach(function (c, i) {
+    html += '<div class="pm-field">' +
+      '<div class="ic" style="background:' + CUSTOM_COLORS[i % CUSTOM_COLORS.length] + ';color:#fff">' +
+      h((c.label || '?')[0].toUpperCase()) + '</div>' +
+      '<div class="bd"><div class="row"><div><label>Name</label>' +
+      '<input type="text" data-cl="' + c.id + '" value="' + h(c.label) + '" placeholder="e.g. Chime"></div>' +
+      '<div><label>Handle or link</label>' +
+      '<input type="text" data-cv="' + c.id + '" value="' + h(c.value) + '" placeholder="@handle"></div></div></div>' +
+      '<button class="remove-x" data-act="rm-custom" data-id="' + h(c.id) + '" title="Remove ' + h(c.label || 'payment method') + '" aria-label="Remove ' + h(c.label || 'payment method') + '" style="margin-top:22px">&times;</button></div>';
+  });
+
+  html += '</div>' +
+    '<button class="btn btn-secondary btn-block" data-act="add-custom">+ Add another method</button>' +
+    '<button class="btn btn-primary btn-block" data-act="save-wallet">Save wallet</button>' +
+    '</div>';
+
+  var f = filledMethods(p);
+  html += '<div class="card"><h3>Ready to share</h3>';
+  if (!f.length) html += '<div class="empty">' + badgeArt() + 'Nothing saved yet.</div>';
+  else f.forEach(function (x) {
+    html += '<div class="pm"><div class="ic" style="background:' + x.m.color + ';color:' + (x.m.fg || '#fff') + '">' + h(x.m.icon) + '</div>' +
+      '<div class="bd"><div class="nm">' + h(x.m.name) + '</div><div class="vl">' + h(x.value) + '</div></div>' +
+      (x.m.link ? '<span class="chip ok">1-tap</span>' : '<span class="chip info">copy</span>') + '</div>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+/* Full-screen code for a table at a booth: nothing but the code, and the phone
+   is asked to stay awake so it does not dim halfway through a sale. */
+function viewFullscreen() {
+  var payload = qrPayload(S.draftAmount, S.draftNote);
+  return '<div class="fsqr">' +
+    '<button class="fs-done" data-act="fs-exit">Done</button>' +
+    '<div class="code">' + qrSvg(payload) + '</div>' +
+    (S.draftAmount ? '<div class="fs-amt">' + money(S.draftAmount) + '</div>' : '') +
+    (S.draftNote ? '<div class="fs-for">' + h(S.draftNote) + '</div>' : '') +
+    '<div class="fs-hint">Point a phone camera at the code</div>' +
+    '<div class="fs-wake">' + (S._wake ? 'Screen will stay on' :
+      (('wakeLock' in navigator) ? 'Turn your brightness up' :
+        'Turn your brightness up — and set auto-lock to Never')) + '</div>' +
+    '</div>';
+}
+
+async function keepAwake() {
+  try {
+    if ('wakeLock' in navigator && !S._wake) {
+      S._wake = await navigator.wakeLock.request('screen');
+      S._wake.addEventListener('release', function () { S._wake = null; });
+      return true;
+    }
+  } catch (e) { }
+  return false;
+}
+function releaseAwake() {
+  try { if (S._wake) { S._wake.release(); S._wake = null; } } catch (e) { }
+}
+/* Phones drop the lock when you switch apps; take it back on return. */
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'visible' && S.fullscreen) keepAwake();
+});
+
+function viewPage() {
+  var pg = S.page || blankPage();
+  var presets = parsePresets(pg.presets);
+  var linkLen = ndefBytes(shareLink('', ''));
+  var fit = tagFit(linkLen);
+
+  var html = '<div class="wrap">';
+
+  html += '<div class="card"><h2>Your payment page</h2>' +
+    '<p class="helper">This is the page people land on when they scan your code. Leave it all blank and they ' +
+    'get a clean &ldquo;Pay ' + h(S.profile.name || 'me') + '&rdquo; screen. Fill it in and you have a fundraiser page.</p>' +
+    '<button class="btn btn-primary btn-block" data-act="preview">See what they will see</button></div>';
+
+  html += '<div class="card"><h3>Color</h3>' +
+    '<p class="helper">Your color replaces PayHubble teal in the header band and the pay buttons. Everything else stays put.</p>' +
+    '<div class="swatches">' +
+    THEME_ORDER.map(function (k) {
+      var t = THEMES[k];
+      return '<button type="button" class="swatch' + (pg.themeKey === k ? ' on' : '') + '" data-act="theme" data-k="' + k + '" ' +
+        'aria-pressed="' + (pg.themeKey === k) + '" aria-label="' + h(t.name) + '" title="' + h(t.name) + '" ' +
+        'style="background:linear-gradient(155deg,' + t.primary + ',' + t.accent + ')"></button>';
+    }).join('') +
+    '</div>' +
+    '<p class="helper">' + h(theme(pg.themeKey).name) + '</p></div>';
+
+  html += '<div class="card"><h3>Headline</h3>' +
+    '<div style="margin-top:12px"><label for="pg-eyebrow">Small line above the title</label>' +
+    '<input type="text" id="pg-eyebrow" value="' + h(pg.eyebrow) + '" placeholder="e.g. Percussion"></div>' +
+    '<div style="margin-top:14px"><label for="pg-title">Title</label>' +
+    '<input type="text" id="pg-title" value="' + h(pg.title) + '" placeholder="e.g. Bake Sale"></div>' +
+    '<div style="margin-top:14px"><label for="pg-blurb">One or two sentences</label>' +
+    '<textarea id="pg-blurb" rows="3" placeholder="e.g. Every dollar goes straight to new percussion gear and travel for the section.">' + h(pg.blurb) + '</textarea></div>' +
+    '</div>';
+
+  html += '<div class="card"><h3>Amount buttons</h3>' +
+    '<p class="helper">What the buyer can tap when you have not set a price. They can always type their own.</p>' +
+    '<div style="margin-top:12px"><label for="pg-presets">Preset amounts</label>' +
+    '<input type="text" id="pg-presets" value="' + h(pg.presets) + '" placeholder="1, 5, 10, 20" inputmode="numeric"></div>' +
+    '<p class="helper">' + (presets.length
+      ? 'Buttons: ' + presets.map(function (n) { return '$' + n; }).join('  ')
+      : 'Empty, so the page falls back to $1, $5, $10, $20.') + '</p>' +
+    '<div class="note blue" style="margin-top:12px">These only show when you have <b>not</b> typed an amount on the Sell tab. ' +
+    'Set an amount there and the page becomes a bill with a fixed total instead.</div></div>';
+
+  html += '<div class="card"><h3>About section</h3>' +
+    '<p class="helper">Optional. Good for explaining where the money goes.</p>' +
+    '<div style="margin-top:12px"><label for="pg-abouttitle">Heading</label>' +
+    '<input type="text" id="pg-abouttitle" value="' + h(pg.aboutTitle) + '" placeholder="About Campaign"></div>' +
+    '<div style="margin-top:14px"><label for="pg-about">Text <span style="font-weight:400">(blank line starts a new paragraph)</span></label>' +
+    '<textarea id="pg-about" rows="5" placeholder="Tell people about the group and why you are raising money.">' + h(pg.about) + '</textarea></div>' +
+    '<div style="margin-top:14px"><label for="pg-pills">Tag pills, comma separated</label>' +
+    '<input type="text" id="pg-pills" value="' + h(pg.pills) + '" placeholder="Teamwork, Leadership, Self-Discipline"></div>' +
+    '<div style="margin-top:14px"><label for="pg-badge">Badge</label>' +
+    '<input type="text" id="pg-badge" value="' + h(pg.badge) + '" placeholder="501(c)(3) Nonprofit"></div>' +
+    '<div style="margin-top:14px"><label for="pg-footer">Footer line</label>' +
+    '<input type="text" id="pg-footer" value="' + h(pg.footer) + '" placeholder="Thank you for the support"></div>' +
+    '</div>';
+
+  html += '<div class="card"><h3>Link size</h3>' +
+    '<p class="helper">Everything on this page travels inside the QR code and the NFC tag, so more text means a bigger link. ' +
+    'Only matters if you are writing cheap tags.</p>' +
+    '<div class="pill-row"><span class="chip">' + linkLen + ' bytes</span>' +
+    '<span class="chip ' + fit.cls + '">' + h(fit.label) + '</span></div></div>';
+
+  html += '<button class="btn btn-primary btn-block" data-act="save-page">Save page</button>';
+  html += '<button class="btn btn-danger btn-block" data-act="clear-page">Clear everything</button>';
+
+  return html + '</div>';
+}
+
+function viewCard() {
+  var fm = filledMethods(S.profile);
+  if (!fm.length) {
+    return '<div class="wrap"><div class="card"><div class="empty">' + badgeArt() +
+      '<b>Add a payment method first</b><br>Your card needs at least one way to pay you.</div>' +
+      '<button class="btn btn-primary btn-block" data-act="go" data-v="wallet">Set up my wallet</button></div></div>';
+  }
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var standalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
+  var aUrl = passUrl('apple'), gUrl = passUrl('google');
+
+  var html = '<div class="wrap">';
+
+  /* --- the card image --- */
+  html += '<div class="card"><h2>Your payment card</h2>' +
+    '<p class="helper">One card with every way to pay you. It has no amount on it, so the same card works ' +
+    'for every sale &mdash; hand someone your phone, they scan it, done.</p>' +
+    '<div class="cardprev" style="margin-top:14px"><img id="card-img" alt="Your PayHubble payment card"></div>' +
+    (!isHosted()
+      ? '<div class="note" style="margin-top:14px">The code on this card opens ' +
+      h((singleLink('', '') || { name: 'your first payment app' }).name) +
+      ' only, because the full page needs a web address. The other methods are printed on the card, so people can still ' +
+      'read them. <a href="#" data-act="go" data-v="settings">Set a web address</a> and the code covers everything.</div>'
+      : '') +
+    (isIOS
+      ? '<div class="note blue" style="margin-top:14px"><b>To save it:</b> press and hold the card above, then choose <b>Save to Photos</b>. ' +
+      'Set it as your lock screen and you can show it without unlocking.</div>'
+      : '') +
+    '<button class="btn btn-primary btn-block" data-act="save-card">Save card image</button>' +
+    '<button class="btn btn-secondary btn-block" data-act="share-card">Send the card to someone</button>' +
+    '</div>';
+
+  /* --- Apple Wallet --- */
+  html += '<div class="card"><h2>Apple Wallet</h2>';
+  if (aUrl) {
+    html += '<p class="helper">Adds a real Wallet card. Double-click the side button, show the QR, get paid.</p>' +
+      '<a class="wbtn apple" href="' + h(aUrl) + '"> Add to Apple Wallet</a>';
+  } else {
+    html += '<p class="helper">Apple requires every Wallet card to be cryptographically signed with a certificate ' +
+      'from a paid Apple Developer account ($99/year). There is no way around it &mdash; iOS rejects unsigned cards. ' +
+      'The generator is built and waiting; it needs your certificate and a place to run.</p>' +
+      '<ol class="steps">' +
+      '<li>Get an Apple Developer account and create a Pass Type ID certificate (the included guide walks through it).</li>' +
+      '<li>Deploy the pass service from the <b>payhub-passes</b> folder to Netlify or run it on your own machine.</li>' +
+      '<li>Paste its address into Settings, and this button turns on.</li>' +
+      '</ol>' +
+      '<button class="wbtn apple" disabled> Add to Apple Wallet</button>' +
+      '<p class="helper center">Not set up yet</p>' +
+      '<div class="note" style="margin-top:10px">Meanwhile the card image above does the same job on any phone, ' +
+      'for free &mdash; save it to Photos and it is one swipe away.</div>';
+  }
+  html += '</div>';
+
+  /* --- Google Wallet --- */
+  html += '<div class="card"><h2>Google Wallet</h2>';
+  if (gUrl) {
+    html += '<p class="helper">The Android equivalent. Same card, same QR.</p>' +
+      '<a class="wbtn google" href="' + h(gUrl) + '">Add to Google Wallet</a>';
+  } else {
+    html += '<p class="helper">Google’s issuer account is free, but it needs a Google Wallet Console signup and ' +
+      'business verification before it will issue cards. The generator is included and works the same way as Apple’s ' +
+      '&mdash; once your service is running, this button turns on too.</p>' +
+      '<button class="wbtn google" disabled>Add to Google Wallet</button>' +
+      '<p class="helper center">Not set up yet</p>';
+  }
+  html += '</div>';
+
+  /* --- home screen --- */
+  html += '<div class="card"><h2>Put PayHubble on your home screen</h2>';
+  if (standalone) {
+    html += '<p class="helper">✓ Already installed &mdash; you are running it from your home screen right now.</p>';
+  } else if (!isHosted()) {
+    html += '<p class="helper">This works once the app lives at a web address. ' +
+      '<a href="#" data-act="go" data-v="settings">Set that up</a> and come back.</p>';
+  } else if (isIOS) {
+    html += '<p class="helper">Free, instant, and the fastest option of all &mdash; one tap from your home screen ' +
+      'straight to your QR code.</p><ol class="steps">' +
+      '<li>Open this page in <b>Safari</b> (not Chrome &mdash; only Safari can install it).</li>' +
+      '<li>Tap the <b>Share</b> button at the bottom.</li>' +
+      '<li>Scroll down and tap <b>Add to Home Screen</b>.</li>' +
+      '<li>Name it PayHubble and tap <b>Add</b>.</li></ol>';
+  } else {
+    html += '<p class="helper">One tap from your home screen straight to your QR code.</p><ol class="steps">' +
+      '<li>Open this page in <b>Chrome</b>.</li>' +
+      '<li>Tap the <b>⋮</b> menu, top right.</li>' +
+      '<li>Tap <b>Add to Home screen</b> or <b>Install app</b>.</li></ol>';
+  }
+  html += '</div>';
+
+  html += '<div class="card"><h3>Which should you use?</h3>' +
+    '<div class="kv"><span>Card image in Photos</span><b>Free, works now</b></div>' +
+    '<div class="kv"><span>Home screen icon</span><b>Free, needs hosting</b></div>' +
+    '<div class="kv"><span>Apple Wallet</span><b>$99/year</b></div>' +
+    '<div class="kv"><span>Google Wallet</span><b>Free, needs approval</b></div>' +
+    '<p class="helper">Apple Wallet is the slickest &mdash; it opens without unlocking your phone. ' +
+    'But a saved photo on your lock screen gets you 90% of that for nothing.</p></div>';
+
+  return html + '</div>';
+}
+
+function viewActivity() {
+  var a = S.activity.slice().sort(function (x, y) { return y.ts - x.ts; });
+  var owed = a.filter(function (r) { return !r.paid; }).reduce(function (s, r) { return s + Number(r.amount || 0); }, 0);
+  var paid = a.filter(function (r) { return r.paid; }).reduce(function (s, r) { return s + Number(r.amount || 0); }, 0);
+  var total = paid + owed;
+  var pct = total > 0 ? Math.round((paid / total) * 100) : 0;
+
+  var html = '<div class="wrap">';
+
+  html += '<div class="hero"><div class="spark">' + SPARK_SVG + '</div>' +
+    '<p class="kicker">Money in</p>' +
+    '<div class="fig">' + moneyHero(paid) + '</div>' +
+    '<p>' + (owed > 0 ? 'You&rsquo;re owed ' + money(owed) + ' more' : 'Nothing outstanding') + '</p>' +
+    (total > 0 ? '<div class="track' + (pct >= 100 ? ' done' : '') + '"><i style="width:' + pct + '%"></i></div>' : '') +
+    '</div>';
+
+  html += '<div class="card">' +
+    '<div class="kv"><span>Marked paid</span><b class="money">' + money(paid) + '</b></div>' +
+    '<div class="kv"><span>Still waiting</span><b class="money">' + money(owed) + '</b></div>' +
+    '<div class="kv"><span>Requests logged</span><b class="money">' + a.length + '</b></div>' +
+    '<p class="helper">You log these yourself when you share an amount. PayHubble cannot see your Venmo or PayPal balance.</p></div>';
+
+  html += '<div class="card"><h3>History</h3>';
+  if (!a.length) html += '<div class="empty">' + badgeArt() +
+    'Nothing logged yet. Share an amount on the Sell tab and tap &ldquo;Log this as a request&rdquo;.</div>';
+  else a.forEach(function (r) {
+    html += '<div class="list-item">' +
+      '<div style="flex:1;min-width:0"><b class="money">' + money(r.amount) + '</b> ' +
+      '<span class="mini">' + h(r.date) + '</span>' +
+      (r.note ? '<div class="mini" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + h(r.note) + '</div>' : '') +
+      '<div style="margin-top:4px"><span class="chip ' + (r.paid ? 'ok' : 'warn') + '">' + (r.paid ? 'Paid' : 'Owed') + '</span></div>' +
+      '</div>' +
+      '<button class="btn btn-sm ' + (r.paid ? 'btn-secondary' : 'btn-primary') + '" data-act="toggle-paid" data-id="' + r.id + '">' +
+      (r.paid ? 'Undo' : 'Mark paid') + '</button>' +
+      '<button class="remove-x" data-act="rm-activity" data-id="' + h(r.id) + '" title="Remove request" aria-label="Remove request">&times;</button>' +
+      '</div>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function viewSettings() {
+  return '<div class="wrap">' +
+    '<div class="card"><h2>Web address</h2>' +
+    '<p class="helper">For the &ldquo;All methods&rdquo; QR code and NFC tags to open on someone else&rsquo;s phone, ' +
+    'this app has to live somewhere public. Drop this file on Netlify Drop, GitHub Pages, or any static host, ' +
+    'then paste the address here.</p>' +
+    '<div style="margin-top:14px"><label for="set-base">Public address of this app</label>' +
+    '<input type="text" id="set-base" value="' + h(S.settings.baseUrl || '') + '" placeholder="https://yourname.netlify.app/payhub.html" autocapitalize="none" spellcheck="false"></div>' +
+    '<button class="btn btn-primary btn-block" data-act="save-settings">Save</button>' +
+    '<p class="helper">' + (isHosted() ? '✓ Links point at ' + h(baseUrl()) : 'Right now links point at this file, which only works on this device.') + '</p>' +
+    '</div>' +
+
+    '<div class="card"><h2>Wallet pass service</h2>' +
+    '<p class="helper">Apple and Google both require passes to be signed on a server &mdash; a browser cannot do it. ' +
+    'Deploy the <b>payhub-passes</b> folder, then paste its address here to switch on the ' +
+    '&ldquo;Add to Apple Wallet&rdquo; and &ldquo;Add to Google Wallet&rdquo; buttons.</p>' +
+    '<div style="margin-top:14px"><label for="set-pass">Pass service address</label>' +
+    '<input type="text" id="set-pass" value="' + h(S.settings.passUrl || '') + '" ' +
+    'placeholder="https://yourname.netlify.app/.netlify/functions/pass" autocapitalize="none" spellcheck="false"></div>' +
+    '<button class="btn btn-primary btn-block" data-act="save-settings">Save</button>' +
+    '<p class="helper">' + (S.settings.passUrl ? '✓ Wallet buttons are on' : 'Wallet buttons are off until this is set') + '</p>' +
+    '</div>' +
+
+    '<div class="card"><h3>Account</h3>' +
+    '<div class="kv"><span>Username</span><b>' + h(S.user.username) + '</b></div>' +
+    '<div class="kv"><span>Email</span><b>' + h(S.user.email || '—') + '</b></div>' +
+    '<div class="kv"><span>Data</span><b>Synced to your PayHubble account</b></div>' +
+    '<button class="btn btn-ghost btn-block" data-act="change-password">Change password</button>' +
+    '<button class="btn btn-ghost btn-block" data-act="export">Export my data</button>' +
+    '<button class="btn btn-danger btn-block" data-act="signout">Sign out</button>' +
+    '</div>' +
+
+    '<div class="card"><h3>How the tap works</h3>' +
+    '<p class="helper" style="margin-top:8px">A true phone-to-phone tap is not something any web app can do &mdash; iPhones will not ' +
+    'broadcast a link over NFC, and Android will not do it from a browser. What does work everywhere is a ' +
+    '<b>physical NFC tag</b>: a sticker or card you write once and then let people tap. iPhones from the XS on read ' +
+    'those tags with no app open at all. The QR code is the universal backup, and it is usually faster anyway.</p>' +
+    '</div></div>';
+}
+
+/* ---------- what the customer sees ----------
+   Two shapes, chosen automatically:
+     - the seller set an amount  → a bill. Fixed total, no picker.
+     - the seller left it blank  → a donation jar. The buyer picks the amount.
+   The campaign color only reaches the header band, the pay-button rules and the
+  sticky total; type, radii and chips stay PayHubble's. */
+function viewCustomer(data, isPreview) {
+  var p = data.profile, amt = data.amount, note = data.note;
+  var pg = data.page || blankPage();
+  var th = theme(pg.themeKey);
+  var f = filledMethods(p);
+  var fixed = !!(amt && Number(amt) > 0);
+  var presets = parsePresets(pg.presets);
+  if (!presets.length) presets = [1, 5, 10, 20];
+
+  /* the amount the buyer is currently on */
+  CUST.fixed = fixed;
+  CUST.amount = fixed ? String(amt) : String(presets[Math.min(1, presets.length - 1)]);
+  CUST.note = note || pg.title || '';
+  CUST.methods = f;
+
+  var html = '';
+  if (isPreview) html += '<div class="wrap" style="padding-bottom:0"><div class="note blue" style="margin:14px 0 0">Preview &mdash; ' +
+    'this is exactly what someone sees after scanning your code. ' +
+    '<a href="#" data-act="close-preview">Back to PayHubble</a></div></div>';
+
+  html += '<div class="pp" style="--pri:' + th.primary + ';--acc:' + th.accent +
+    ';--tint:' + th.tint + ';--ln:' + th.line + '">';
+
+  /* hero */
+  html += '<div class="hero2">' +
+    (pg.eyebrow ? '<p class="eyebrow">' + h(pg.eyebrow) + '</p>' : '') +
+    '<h1 class="title">' + h(pg.title || ('Pay ' + (p.name || 'me'))) + '</h1>' +
+    (pg.blurb ? '<p class="blurb">' + h(pg.blurb) + '</p>'
+      : (pg.title ? '<p class="blurb">Pick an amount below, then pay however is easiest.</p>' : '')) +
+    '</div>';
+
+  html += '<div class="body2">';
+
+  /* amount */
+  if (fixed) {
+    html += '<div class="panel due"><p class="plabel">Amount due</p>' +
+      '<div class="amt">' + moneyHero(amt) + '</div>' +
+      (note ? '<div class="for">' + h(note) + '</div>' : '') +
+      '</div>';
+  } else {
+    html += '<div class="panel"><p class="plabel">Choose an amount</p>' +
+      '<div class="agrid">' +
+      presets.map(function (n, i) {
+        return '<button class="abtn' + (String(n) === CUST.amount ? ' on' : '') +
+          '" data-act="cust-amt" data-amt="' + n + '">$' + n + '</button>';
+      }).join('') +
+      '</div>' +
+      '<div class="custom"><span>$</span>' +
+      '<input type="number" id="cust-custom" min="1" step="0.01" placeholder="Other" ' +
+      'inputmode="decimal" data-live="cust-amount" aria-label="Other amount"></div>' +
+      '</div>';
+  }
+
+  /* payment cards */
+  if (!f.length) {
+    html += '<div class="panel"><div class="empty">This link does not have any payment methods in it.</div></div>';
+  } else {
+    html += '<div class="cards2">';
+    f.forEach(function (x, i) {
+      var glyph = h(x.m.icon || (x.m.name[0] || '?').toUpperCase());
+      var linkable = !!x.m.link || /^https?:/i.test(x.value);
+      html += '<div class="pcard">' +
+        '<div class="phead">' +
+        '<div class="glyph" style="background:' + x.m.color + ';color:' + (x.m.fg || '#fff') + '">' + glyph + '</div>' +
+        '<div class="pmeta"><h3>' + h(x.m.name) + '</h3>' +
+        '<div class="handle">' + h(x.value) + '</div></div>' +
+        '</div>';
+      if (linkable) {
+        html += '<a class="paybtn" style="--mc:' + x.m.color + '" data-paylink="' + i + '" ' +
+          'href="' + h(payLink(x, CUST.amount, CUST.note)) + '" target="_blank" rel="noopener">' +
+          h(payLabel(x, CUST.amount)) + '</a>';
+      } else if (x.m.id === 'cash') {
+        /* Nothing to copy or tap — the handle itself is the instruction. */
+        html += '<p class="pnote" style="margin-top:0">' + h(copyHint(x.m)) + '</p>';
+      } else {
+        html += '<button class="paybtn" style="--mc:' + x.m.color + '" ' +
+          'data-act="cust-copy" data-val="' + h(x.value) + '" data-i="' + i + '">' +
+          'Copy ' + h(x.m.name) + ' info</button>' +
+          '<p class="confirm" id="cf-' + i + '"></p>' +
+          '<p class="pnote">' + h(copyHint(x.m)) + '</p>';
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+    var linkNames = f.filter(function (x) { return x.m.link; }).map(function (x) { return x.m.name; });
+    if (linkNames.length) {
+      var listed = linkNames.length > 1
+        ? linkNames.slice(0, -1).join(', ') + ' and ' + linkNames[linkNames.length - 1]
+        : linkNames[0];
+      html += '<p class="gridnote">' + h(listed) + ' open with the amount already filled in.</p>';
+    }
+  }
+
+  /* about */
+  if (pg.about || pg.pills || pg.badge) {
+    html += '<div class="panel about2">' +
+      '<h3>' + h(pg.aboutTitle || 'About') + '</h3>' +
+      (pg.about ? pg.about.split(/\n+/).filter(Boolean).map(function (para) {
+        return '<p>' + h(para) + '</p>';
+      }).join('') : '') +
+      (pg.pills ? '<div class="pills">' + pg.pills.split(',').map(function (s) {
+        return s.trim() ? '<span>' + h(s.trim()) + '</span>' : '';
+      }).join('') + '</div>' : '') +
+      (pg.badge ? '<span class="badge2">' + h(pg.badge) + '</span>' : '') +
+      '</div>';
+  }
+
+  html += '</div>';
+  html += '<div class="foot2">' + h(pg.footer || ((p.name || 'PayHubble') + ' — thank you')) + '</div>';
+
+  if (f.length) {
+    html += '<div class="amtbar" id="amt-bar">' +
+      '<span class="lbl">' + (fixed ? 'Total' : 'Sending') + '</span>' +
+      '<span class="bar-amt">' + (CUST.amount ? money(CUST.amount) : 'Choose an amount') + '</span>' +
+      (fixed ? '' : '<button data-act="cust-change">Change</button>') +
+      '</div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+/* Button label carries the amount, so the last thing they read before tapping
+   is the number they are about to send. */
+function payLabel(x, amount) {
+  var n = parseFloat(amount);
+  return (isFinite(n) && n > 0)
+    ? 'Pay ' + money(amount) + ' with ' + x.m.name
+    : 'Pay with ' + x.m.name;
+}
+
+/* Live buyer-side amount state, so changing the amount just rewrites the
+   hrefs instead of re-rendering the whole page under the buyer's finger. */
+var CUST = { amount: '', fixed: false, note: '', methods: [] };
+
+function payLink(x, amount, note) {
+  if (x.m.link) return x.m.link(x.value, amount, note);
+  return /^https?:/i.test(x.value) ? x.value : '#';
+}
+function copyHint(m) {
+  if (m.id === 'zelle') return 'Zelle does not open from a link — copy this, then send from your own bank app.';
+  if (m.id === 'applecash') return 'Send it in Messages to this number, then tap the Apple Cash button.';
+  if (m.id === 'googlepay') return 'Open Google Pay and send to this number or email.';
+  if (m.id === 'cash') return 'Paying in person — bring it to the table.';
+  return 'Copy this, then send it from that app.';
+}
+
+/* Rewrite every deep link for the amount the buyer has chosen. */
+function refreshCustomerLinks() {
+  var raw = String(CUST.amount || '').trim();
+  var n = parseFloat(raw);
+  /* keep what they typed — "25.00" reads better in PayPal than "25" */
+  var amt = (isFinite(n) && n > 0) ? raw : '';
+  CUST.methods.forEach(function (x, i) {
+    var el = document.querySelector('[data-paylink="' + i + '"]');
+    if (el) {
+      el.setAttribute('href', payLink(x, amt, CUST.note));
+      el.textContent = payLabel(x, amt);
+    }
+  });
+  var bar = document.querySelector('#amt-bar .bar-amt');
+  if (bar) bar.textContent = amt ? money(amt) : 'Choose an amount';
+  document.querySelectorAll('[data-act="cust-amt"]').forEach(function (b) {
+    b.classList.toggle('on', b.getAttribute('data-amt') === CUST.amount);
+  });
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function render() {
+  var root = document.getElementById('root');
+
+  if (S.fullscreen && S.user) {
+    root.innerHTML = viewFullscreen();
+    return;
+  }
+
+  /* customer view: someone opened a shared link */
+  if (S.customerData && !S.previewOn) {
+    root.innerHTML = viewCustomer(S.customerData, false);
+    return;
+  }
+  if (S.previewOn) {
+    root.innerHTML = viewCustomer({ profile: S.profile, amount: S.draftAmount, note: S.draftNote, page: S.page }, true);
+    return;
+  }
+  if (S.booting) { root.innerHTML = header('') + viewLoading(); return; }
+  if (S.recoveryMode) { root.innerHTML = header('') + viewSetNewPassword(); return; }
+  if (!S.user) { root.innerHTML = header('') + viewSignIn(); return; }
+
+  var body = S.view === 'wallet' ? viewWallet()
+    : S.view === 'page' ? viewPage()
+      : S.view === 'card' ? viewCard()
+        : S.view === 'activity' ? viewActivity()
+          : S.view === 'settings' ? viewSettings()
+            : viewSell();
+
+  root.innerHTML = header(S.user.username) + body + tabs();
+  var noteEl = document.getElementById('sell-note');
+  if (noteEl && S._focusNote) { noteEl.focus(); noteEl.setSelectionRange(noteEl.value.length, noteEl.value.length); S._focusNote = false; }
+
+  drawCardInto();
+}
+
+/* The card is drawn in Poppins; redraw once the webfont has actually landed so
+   the PNG matches the app instead of falling back to Helvetica. */
+var _cardFontWaited = false;
+function drawCardInto() {
+  var img = document.getElementById('card-img');
+  if (!img) return;
+  try { S._cardPng = drawCardImage(); img.src = S._cardPng; }
+  catch (e) { img.alt = 'Could not draw the card'; }
+  if (!_cardFontWaited && document.fonts && document.fonts.ready) {
+    _cardFontWaited = true;
+    document.fonts.ready.then(function () {
+      var again = document.getElementById('card-img');
+      if (!again) return;
+      try { S._cardPng = drawCardImage(); again.src = S._cardPng; } catch (e) { }
+    });
+  }
+}
+
+/* Wordmark: wide geometric caps at 0.14em — the one place the tracking lives. */
+function header(who) {
+  return '<header class="top"><div class="in"><span class="logo">' + LOGO_SVG + '</span>' +
+    '<h1>PayHubble</h1>' +
+    (who ? '<div class="who">' + h(who) + '</div>' : '') + '</div></header>';
+}
+function tabs() {
+  var items = [['sell', 'sell', 'Sell'], ['page', 'page', 'Page'], ['card', 'card', 'Card'],
+  ['wallet', 'wallet', 'Wallet'], ['activity', 'activity', 'Money'], ['settings', 'settings', 'More']];
+  return '<nav class="tabs"><div class="in">' + items.map(function (it) {
+    var on = S.view === it[0];
+    return '<button data-act="go" data-v="' + it[0] + '"' + (on ? ' class="on" aria-current="page"' : '') + '>' +
+      '<span class="ic">' + ICONS[it[1]] + '</span>' + it[2] + '</button>';
+  }).join('') + '</div></nav>';
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+async function saveAll() {
+  if (!S.user || !supabase) return;
+  try {
+    await supabase.from('hubs').update({
+      profile: S.profile, page: S.page, settings: S.settings, activity: S.activity,
+      updated_at: new Date().toISOString()
+    }).eq('user_id', S.user.id);
+  } catch (e) { toast('Could not save — check your connection'); }
+}
+/* Pull the signed-in user's payment methods, page and activity down from
+   Supabase. If this is their very first sign-in and no hub row exists yet
+   (e.g. it was created outside the normal sign-up flow), start a blank one. */
+async function loadHub(uid) {
+  var blank = { baseUrl: '', qrMode: 'page', shareMethod: '', passUrl: '' };
+  try {
+    var res = await supabase.from('hubs').select('profile,page,settings,activity').eq('user_id', uid).single();
+    var data = res.data;
+    if (data) {
+      S.profile = data.profile || blankProfile(S.user.username);
+      S.page = Object.assign(blankPage(), data.page || {});
+      S.settings = Object.assign({}, blank, data.settings || {});
+      S.activity = data.activity || [];
+    } else {
+      S.profile = blankProfile(S.user.username);
+      S.page = blankPage();
+      S.settings = blank;
+      S.activity = [];
+      await supabase.from('hubs').insert({ user_id: uid, profile: S.profile, page: S.page, settings: S.settings, activity: S.activity });
+    }
+  } catch (e) {
+    S.profile = blankProfile(S.user.username);
+    S.page = blankPage();
+    S.settings = blank;
+    S.activity = [];
+  }
+  if (!S.profile.custom) S.profile.custom = [];
+}
+/* A Supabase session only carries the user's id and email; the username
+   they log in with lives in the profiles table. Normally that row is
+   created at sign-up, but if "Confirm email" is on there's no session yet
+   at that point to create it under — so the username sign-up asked for
+   rides along as auth metadata and gets claimed here instead, the first
+   time they actually have a session (i.e. right after confirming). */
+async function establishSession(session) {
+  var uid = session.user.id;
+  var email = session.user.email || '';
+  var metaUsername = (session.user.user_metadata && session.user.user_metadata.username) || '';
+  var username = metaUsername || email.split('@')[0];
+  try {
+    var res = await supabase.from('profiles').select('username').eq('id', uid).single();
+    if (res.data && res.data.username) {
+      username = res.data.username;
+    } else if (metaUsername) {
+      var ins = await supabase.from('profiles').insert({ id: uid, username: metaUsername });
+      if (!ins.error) username = metaUsername;
+    }
+  } catch (e) { }
+  S.user = { id: uid, username: username, email: email };
+  await loadHub(uid);
+}
+function readWalletInputs() {
+  METHODS.forEach(function (m) {
+    var el = document.getElementById('wf-' + m.id);
+    if (el) S.profile[m.id] = el.value.trim();
+  });
+  (S.profile.custom || []).forEach(function (c) {
+    var l = document.querySelector('[data-cl="' + c.id + '"]');
+    var v = document.querySelector('[data-cv="' + c.id + '"]');
+    if (l) c.label = l.value.trim();
+    if (v) c.value = v.value.trim();
+  });
+}
+async function copyText(t) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(t); toast('Copied'); return; }
+  } catch (e) { }
+  var ta = document.createElement('textarea');
+  ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); toast('Copied'); } catch (e) { toast('Could not copy — select it by hand'); }
+  document.body.removeChild(ta);
+}
+
+document.addEventListener('click', async function (e) {
+  var el = e.target.closest('[data-act]');
+  if (!el) return;
+  var act = el.getAttribute('data-act');
+  if (el.tagName === 'A' && (act === 'go' || act === 'close-preview')) e.preventDefault();
+
+  if (act === 'authmode') {
+    S.authMode = el.getAttribute('data-m'); S.authError = ''; render(); return;
+  }
+  if (act === 'signin') {
+    if (!supabase) { S.authError = 'Account service is not set up yet.'; render(); return; }
+    var uname = (document.getElementById('au-username').value || '').trim().toLowerCase();
+    var pw = document.getElementById('au-password').value || '';
+    if (!uname || !pw) { S.authError = 'Enter your username and password.'; render(); return; }
+    S.authBusy = true; S.authError = ''; render();
+    try {
+      var em = await supabase.rpc('email_for_username', { uname: uname });
+      if (em.error || !em.data) { S.authBusy = false; S.authError = 'No account with that username.'; render(); return; }
+      var res = await supabase.auth.signInWithPassword({ email: em.data, password: pw });
+      if (res.error) { S.authBusy = false; S.authError = 'Incorrect username or password.'; render(); return; }
+      await establishSession(res.data.session);
+      S.authBusy = false; render(); toast('Welcome back, ' + S.user.username);
+    } catch (e) { S.authBusy = false; S.authError = 'Something went wrong. Try again.'; render(); }
+    return;
+  }
+  if (act === 'signup') {
+    if (!supabase) { S.authError = 'Account service is not set up yet.'; render(); return; }
+    var uname = (document.getElementById('au-username').value || '').trim().toLowerCase();
+    var email = (document.getElementById('au-email').value || '').trim();
+    var pw = document.getElementById('au-password').value || '';
+    var pw2 = document.getElementById('au-password2').value || '';
+    if (!/^[a-z0-9_.-]{3,24}$/.test(uname)) { S.authError = 'Username should be 3-24 characters: letters, numbers, . _ -'; render(); return; }
+    if (!/^\S+@\S+\.\S+$/.test(email)) { S.authError = 'Enter a valid email — it is only used if you forget your password.'; render(); return; }
+    if (pw.length < 8) { S.authError = 'Password must be at least 8 characters.'; render(); return; }
+    if (pw !== pw2) { S.authError = 'Passwords do not match.'; render(); return; }
+    S.authBusy = true; S.authError = ''; render();
+    try {
+      var avail = await supabase.rpc('username_available', { uname: uname });
+      if (avail.data === false) { S.authBusy = false; S.authError = 'That username is taken.'; render(); return; }
+      var signed = await supabase.auth.signUp({ email: email, password: pw, options: { data: { username: uname } } });
+      if (signed.error) { S.authBusy = false; S.authError = signed.error.message || 'Could not create your account.'; render(); return; }
+      var uid = signed.data.user && signed.data.user.id;
+      if (!signed.data.session) {
+        /* "Confirm email" is on in Supabase — there's no session yet to create
+           the username/wallet row under, so it has to wait until after they
+           click the emailed link and sign in for the first time. */
+        S.authBusy = false;
+        S.authError = uid ? 'Check your inbox to confirm your email, then sign in.'
+          : 'Could not create your account. Try again.';
+        render(); return;
+      }
+      var profErr = await supabase.from('profiles').insert({ id: uid, username: uname });
+      if (profErr.error) { S.authBusy = false; S.authError = 'That username was just taken — try another, or sign in if it was you.'; render(); return; }
+      S.profile = blankProfile(uname); S.page = blankPage();
+      S.settings = { baseUrl: '', qrMode: 'page', shareMethod: '', passUrl: '' }; S.activity = [];
+      await supabase.from('hubs').insert({ user_id: uid, profile: S.profile, page: S.page, settings: S.settings, activity: S.activity });
+      S.user = { id: uid, username: uname, email: email };
+      S.authBusy = false; S.view = 'wallet'; render(); toast('Welcome, ' + uname);
+    } catch (e) { S.authBusy = false; S.authError = 'Something went wrong. Try again.'; render(); }
+    return;
+  }
+  if (act === 'forgot-password') {
+    if (!supabase) { toast('Account service is not set up yet.'); return; }
+    var email = prompt('Enter the email you signed up with:');
+    if (!email) return;
+    try { await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: baseUrl() }); } catch (e) { }
+    toast('If that email has an account, a reset link is on its way.');
+    return;
+  }
+  if (act === 'set-new-password') {
+    var np = document.getElementById('np-password').value || '';
+    var np2 = document.getElementById('np-password2').value || '';
+    if (np.length < 8) { S.authError = 'Password must be at least 8 characters.'; render(); return; }
+    if (np !== np2) { S.authError = 'Passwords do not match.'; render(); return; }
+    S.authBusy = true; S.authError = ''; render();
+    try {
+      var upd = await supabase.auth.updateUser({ password: np });
+      if (upd.error) { S.authBusy = false; S.authError = upd.error.message || 'Could not update password.'; render(); return; }
+      S.recoveryMode = false; S.authBusy = false;
+      var sess = await supabase.auth.getSession();
+      if (sess.data.session) await establishSession(sess.data.session);
+      render(); toast('Password updated');
+    } catch (e) { S.authBusy = false; S.authError = 'Something went wrong. Try again.'; render(); }
+    return;
+  }
+  if (act === 'go') {
+    if (S.fullscreen) { S.fullscreen = false; releaseAwake(); }
+    if (S.view === 'wallet') { readWalletInputs(); await saveAll(); }
+    if (S.view === 'page') { readPageInputs(); await saveAll(); }
+    S.view = el.getAttribute('data-v'); S.previewOn = false; render(); return;
+  }
+
+  if (act === 'pad') {
+    var k = el.getAttribute('data-k');
+    var cur = S.draftAmount || '';
+    if (k === '⌫') cur = cur.slice(0, -1);
+    else if (k === '.') { if (cur.indexOf('.') < 0) cur = (cur || '0') + '.'; }
+    else { if (/\.\d\d$/.test(cur)) return; cur += k; }
+    S.draftAmount = cur;
+    render();
+    return;
+  }
+  if (act === 'clear-amt') { S.draftAmount = ''; render(); return; }
+  if (act === 'qrmode') { S.settings.qrMode = el.getAttribute('data-m'); await saveAll(); render(); return; }
+  if (act === 'copy') { await copyText(el.getAttribute('data-val')); return; }
+
+  if (act === 'share') {
+    var payload = qrPayload(S.draftAmount, S.draftNote);
+    var msg = (S.settings.qrMode === 'text') ? payload : (S.draftAmount ? 'Pay ' + money(S.draftAmount) + ' to ' + S.profile.name : 'Pay ' + S.profile.name);
+    try {
+      if (navigator.share) {
+        await navigator.share(S.settings.qrMode === 'text' ? { text: payload } : { title: 'Pay ' + S.profile.name, text: msg, url: payload });
+        return;
+      }
+    } catch (err) { if (err && err.name === 'AbortError') return; }
+    await copyText(payload);
+    toast('Copied — paste it into a text message');
+    return;
+  }
+
+  if (act === 'log-sale') {
+    S.activity.push({ id: uid(), amount: Number(S.draftAmount) || 0, note: S.draftNote, date: todayISO(), ts: Date.now(), paid: false });
+    await saveAll();
+    toast('Logged — see Money');
+    return;
+  }
+  if (act === 'toggle-paid') {
+    var r = S.activity.filter(function (x) { return x.id === el.getAttribute('data-id'); })[0];
+    if (r) {
+      r.paid = !r.paid;
+      await saveAll(); render();
+      if (r.paid) { celebrate(); toast('Paid — nice'); }
+    }
+    return;
+  }
+  if (act === 'rm-activity') {
+    S.activity = S.activity.filter(function (x) { return x.id !== el.getAttribute('data-id'); });
+    await saveAll(); render(); return;
+  }
+
+  if (act === 'add-custom') {
+    readWalletInputs();
+    if (!S.profile.custom) S.profile.custom = [];
+    S.profile.custom.push({ id: uid(), label: '', value: '' });
+    render(); return;
+  }
+  if (act === 'rm-custom') {
+    readWalletInputs();
+    S.profile.custom = (S.profile.custom || []).filter(function (c) { return c.id !== el.getAttribute('data-id'); });
+    await saveAll(); render(); return;
+  }
+  if (act === 'save-wallet') {
+    readWalletInputs();
+    S.profile.custom = (S.profile.custom || []).filter(function (c) { return c.label || c.value; });
+    await saveAll(); render(); toast('Wallet saved'); return;
+  }
+  if (act === 'save-settings') {
+    var bEl = document.getElementById('set-base');
+    if (bEl) S.settings.baseUrl = httpUrl(bEl.value);
+    var pEl = document.getElementById('set-pass');
+    if (pEl) S.settings.passUrl = httpUrl(pEl.value);
+    await saveAll(); render(); toast('Saved'); return;
+  }
+  if (act === 'change-password') {
+    var np = prompt('New password (at least 8 characters):');
+    if (np === null) return;
+    if (np.length < 8) { toast('Password must be at least 8 characters'); return; }
+    try {
+      var upd = await supabase.auth.updateUser({ password: np });
+      if (upd.error) { toast(upd.error.message || 'Could not update password'); return; }
+      toast('Password updated');
+    } catch (e) { toast('Could not update password'); }
+    return;
+  }
+  if (act === 'export') {
+    var blob = new Blob([JSON.stringify({ user: { username: S.user.username, email: S.user.email }, profile: S.profile, activity: S.activity }, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'payhub-backup.json'; a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    return;
+  }
+  if (act === 'signout') {
+    if (!confirm('Sign out of PayHubble on this device?')) return;
+    if (supabase) { try { await supabase.auth.signOut(); } catch (e) { } }
+    S.user = null; S.profile = null; S.page = blankPage(); S.activity = [];
+    S.settings = { baseUrl: '', qrMode: 'page', shareMethod: '', passUrl: '' };
+    S.view = 'sell'; render(); return;
+  }
+  /* ---- page builder ---- */
+  if (act === 'theme') {
+    readPageInputs();
+    S.page.themeKey = el.getAttribute('data-k');
+    await saveAll(); render(); return;
+  }
+  if (act === 'save-page') {
+    readPageInputs();
+    await saveAll(); render(); toast('Page saved'); return;
+  }
+  if (act === 'clear-page') {
+    if (!confirm('Clear the headline, about section and colors? Your payment methods are not touched.')) return;
+    S.page = blankPage();
+    await saveAll(); render(); toast('Page cleared'); return;
+  }
+
+  /* ---- the buyer's amount picker ---- */
+  if (act === 'cust-amt') {
+    CUST.amount = el.getAttribute('data-amt');
+    var ci = document.getElementById('cust-custom');
+    if (ci) ci.value = '';
+    refreshCustomerLinks();
+    return;
+  }
+  if (act === 'cust-copy') {
+    await copyText(el.getAttribute('data-val'));
+    var cf = document.getElementById('cf-' + el.getAttribute('data-i'));
+    if (cf) {
+      cf.textContent = 'Copied — now paste it in that app.';
+      clearTimeout(cf._tm);
+      cf._tm = setTimeout(function () { cf.textContent = ''; }, 4000);
+    }
+    return;
+  }
+
+  if (act === 'save-card') {
+    var png = S._cardPng || drawCardImage();
+    var a2 = document.createElement('a');
+    a2.href = png;
+    a2.download = 'payhub-card-' + (S.profile.name || 'me').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.png';
+    document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
+    toast('Card saved');
+    return;
+  }
+  if (act === 'share-card') {
+    var png2 = S._cardPng || drawCardImage();
+    try {
+      var res = await fetch(png2);
+      var blob = await res.blob();
+      var file = new File([blob], 'payhub-card.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'Pay ' + S.profile.name });
+        return;
+      }
+    } catch (err) { if (err && err.name === 'AbortError') return; }
+    toast('Sharing images is not supported here — use Save card image');
+    return;
+  }
+  if (act === 'fs-enter') {
+    S.fullscreen = true;
+    render();
+    await keepAwake();
+    render();
+    window.scrollTo(0, 0);
+    return;
+  }
+  if (act === 'fs-exit') { S.fullscreen = false; releaseAwake(); render(); return; }
+  if (act === 'cust-change') {
+    var panel = document.querySelector('.pp .panel');
+    if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var ci2 = document.getElementById('cust-custom');
+    if (ci2) setTimeout(function () { ci2.focus(); }, 350);
+    return;
+  }
+  if (act === 'preview') { S.previewOn = true; render(); window.scrollTo(0, 0); return; }
+  if (act === 'close-preview') { S.previewOn = false; render(); return; }
+
+  if (act === 'nfc-write') {
+    if (!('NDEFReader' in window)) { toast('This browser cannot write NFC tags'); return; }
+    try {
+      toast('Hold the tag against your phone…');
+      var ndef = new NDEFReader();
+      await ndef.write({ records: [{ recordType: 'url', data: el.getAttribute('data-val') }] });
+      toast('✓ Tag written');
+    } catch (err) {
+      toast('Write failed: ' + (err && err.message ? err.message : 'try again'));
+    }
+    return;
+  }
+  if (act === 'nfc-read') {
+    if (!('NDEFReader' in window)) { toast('This browser cannot read NFC tags'); return; }
+    try {
+      var rd = new NDEFReader();
+      await rd.scan();
+      toast('Hold a tag against your phone…');
+      rd.onreading = function (ev) {
+        var found = '';
+        for (var rec of ev.message.records) {
+          if (rec.recordType === 'url' || rec.recordType === 'text') {
+            found = new TextDecoder(rec.encoding || 'utf-8').decode(rec.data);
+          }
+        }
+        toast(found ? 'Tag says: ' + found.slice(0, 60) : 'Tag is empty');
+      };
+    } catch (err) { toast('Scan failed: ' + (err && err.message ? err.message : '')); }
+    return;
+  }
+});
+
+/* Swatches are divs, so give them the keyboard behaviour a button would have. */
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  var sw = e.target.closest && e.target.closest('.swatch[data-act="theme"]');
+  if (!sw) return;
+  e.preventDefault();
+  sw.click();
+});
+
+function readPageInputs() {
+  if (!S.page) S.page = blankPage();
+  [['pg-eyebrow', 'eyebrow'], ['pg-title', 'title'], ['pg-blurb', 'blurb'], ['pg-presets', 'presets'],
+  ['pg-abouttitle', 'aboutTitle'], ['pg-about', 'about'], ['pg-pills', 'pills'],
+  ['pg-badge', 'badge'], ['pg-footer', 'footer']].forEach(function (pair) {
+    var el = document.getElementById(pair[0]);
+    if (el) S.page[pair[1]] = el.value.trim();
+  });
+}
+
+document.addEventListener('input', function (e) {
+  var live = e.target.getAttribute && e.target.getAttribute('data-live');
+  if (live === 'note') { S.draftNote = e.target.value; scheduleQrRefresh(); }
+  if (live === 'single') { S.settings.shareMethod = e.target.value; saveAll(); render(); }
+  if (live === 'cust-amount') {
+    /* Clearing the field must clear the amount too — otherwise the buttons keep
+       advertising the old number while the box reads empty. */
+    CUST.amount = e.target.value.trim();
+    refreshCustomerLinks();
+  }
+});
+var _qrTm = null;
+function scheduleQrRefresh() {
+  clearTimeout(_qrTm);
+  _qrTm = setTimeout(function () {
+    if (S.view !== 'sell' || S.previewOn) return;
+    S._focusNote = true;
+    render();
+  }, 700);
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+(async function boot() {
+  var hash = location.hash ? location.hash.slice(1) : '';
+  if (hash && hash.indexOf('1~') === 0) {
+    var parsed = decodeProfile(hash);
+    if (parsed) S.customerData = parsed;
+  }
+  /* A buyer opening a shared payment link never needs an account —
+     skip Supabase entirely and go straight to the customer view. */
+  if (!S.customerData && supabase) {
+    S.booting = true; render();
+    supabase.auth.onAuthStateChange(function (event, session) {
+      if (event === 'PASSWORD_RECOVERY') { S.recoveryMode = true; render(); }
+      if (event === 'SIGNED_OUT') { S.user = null; S.profile = null; render(); }
+    });
+    try {
+      var res = await supabase.auth.getSession();
+      if (res.data.session && res.data.session.user) await establishSession(res.data.session);
+    } catch (e) { }
+    S.booting = false;
+  }
+  render();
+})();
+</script>
+</body>
+</html>
